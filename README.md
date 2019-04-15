@@ -10,7 +10,7 @@ Where:
 999999999:XXXXXXXXXXXXX - token to access the HTTP API
 
 
-For slack, the im.history method is used, the description of which is located here https://api.slack.com/methods/im.history.
+For slack, the "im.history" method is used, the description of which is located here https://api.slack.com/methods/im.history.
 
 Sample URL to get the list of messages:
 
