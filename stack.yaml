@@ -4,4 +4,6 @@ packages:
 extra-deps: 
 - req-2.0.0
 - retry-0.8.0.0@sha256:319a0586876d43622bfe9406fad067adf0b4e591d125ad960bcc405237cc28f5
+- bytestring-0.10.8.2
+- text-1.2.3.1
 resolver: lts-13.15

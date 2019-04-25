@@ -16,4 +16,3 @@ main = do
     putStrLn $ case result of
                Nothing      -> error "Invalid JSON"
                Just config  -> (t_token . ims_telegram . services) config
-
