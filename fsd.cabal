@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c9e9fabe060c6c6e1bfa5f97f234953692ef7b72e4a438e247fb52a5ead85d55
+-- hash: be7dd0c1a9e9e1b3bfc5e1101f741475e22bf66ad61a3c74163e0b2e6d9951b1
 
 name:           fsd
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      CustomTypes
       Lib
       Types
   other-modules:
