@@ -11,9 +11,7 @@
         },
         "slack":{ 
             "token":"xoxb-592901117889-602756178823-gMnVnSl4ZiakaLVkx4DaG7EE",
-            "defaultRate":10,
-            "channels":{
-            }
-        } 
+            "rate":10
+       } 
     }
 }
