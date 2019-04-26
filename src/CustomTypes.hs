@@ -69,5 +69,4 @@ data RequestTimer = RequestTimer { requestDate :: UTCTime
                                  , request     :: IMRequest} deriving (Eq, Show)
 
 instance Ord RequestTimer where
-    compare x y = compare (requestDate x) (requestDate y) 
-
+    compare x y = compare (requestDate x) (requestDate y)
