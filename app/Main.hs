@@ -12,6 +12,7 @@ import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.Text(Text)
 import           Data.List(sort)
+import           Data.Maybe(fromMaybe)
 
 addMillisec :: Integer -> UTCTime -> UTCTime
 addMillisec sh = addUTCTime (fromRational (fromInteger sh / 1000))
@@ -25,6 +26,9 @@ main :: IO ()
 main = do
     strJSON <- B.readFile "./config.json"
     let result = decodeStrict strJSON :: Maybe ConfigJSON
-    putStrLn $ case result of
-        Nothing     -> error "Invalid JSON"
-        Just config -> (t_token . ims_telegram . services) config
+--  let config = fromMaybe (error "Invalid token") result
+--  let tgUrl = (ims_telegram . services) config
+--  let tgRequest = IMRequest
+    return ()
+
+
