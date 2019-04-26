@@ -8,9 +8,6 @@ import Control.Applicative((<$>), (<*>))
 import Control.Monad(mzero)
 
 
-printConfig :: ConfigJSON -> String
-printConfig (ConfigJSON (IMServices (JSONTelegram t_token _ _ _ ) _ )) = "TG token - " ++ t_token
-
 newtype ConfigJSON = ConfigJSON
     { services :: IMServices}
 
@@ -30,20 +27,13 @@ data JSONSlack = JSONSlack
 
 data Proxy = Proxy
     { proxyIp   :: String
-    , proxyPort :: Int}
+    , proxyPort :: Int} deriving (Eq, Show)
 
-data Messenger = Telegram | Slack
-data HTTPMethod = POST | GET
+data Messenger = Telegram 
+                |Slack  deriving (Eq, Show)
 
-
-data IMRequest = IMRequest
-    { url       :: String
-    , method    :: HTTPMethod
-    , proxy     :: Maybe Proxy
-    , messenger :: Messenger}
-
-data RequestTimer = RequestDate UTCTime
-                   |Request IMRequest
+data HTTPMethod = POST 
+                 |GET   deriving (Eq, Show)
 
 
 instance FromJSON Proxy where
@@ -68,4 +58,16 @@ instance FromJSON ConfigJSON where
     parseJSON (Object conf) = ConfigJSON <$> conf .: "services"
                   
 
+
+data IMRequest = IMRequest
+    { url       :: String
+    , method    :: HTTPMethod
+    , proxy     :: Maybe Proxy
+    , messenger :: Messenger} deriving (Eq, Show)
+
+data RequestTimer = RequestTimer { requestDate :: UTCTime
+                                 , request     :: IMRequest} deriving (Eq, Show)
+
+instance Ord RequestTimer where
+    compare x y = compare (requestDate x) (requestDate y) 
 
