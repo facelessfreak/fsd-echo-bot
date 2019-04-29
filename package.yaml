@@ -26,6 +26,7 @@ dependencies:
 - req >= 2.0.0
 - bytestring >= 0.10.8.2
 - text >= 1.2.3.1
+- mtl >= 2.2.2
 
 library:
   source-dirs: src

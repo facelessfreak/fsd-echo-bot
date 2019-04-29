@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5a2288b90af6c3182402c9b92f47fd06cd72ed8fc3710e1916a9c561c5773113
+-- hash: 7c406167d13c8b6e2b242203e4da526aa4a3ffbff9b83837ea2c4bc43eb8d814
 
 name:           fsd
 version:        0.1.0.0
@@ -29,6 +29,8 @@ library
   exposed-modules:
       CustomTypes
       Lib
+      Slack
+      Telegram
   other-modules:
       Paths_fsd
   hs-source-dirs:
@@ -37,6 +39,7 @@ library
       aeson >=1.4.2.0
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
+    , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1
     , time >=1.8.0.2
@@ -54,6 +57,7 @@ executable fsd-exe
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1
     , time >=1.8.0.2
@@ -72,6 +76,7 @@ test-suite fsd-test
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1
     , time >=1.8.0.2

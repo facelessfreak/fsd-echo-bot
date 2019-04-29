@@ -6,6 +6,21 @@ import Data.Time.Clock(UTCTime)
 import Data.Aeson
 import Control.Applicative((<$>), (<*>))
 import Control.Monad(mzero)
+import Network.HTTP.Req
+
+data ReqMethod = Rget GET | Rpost POST 
+
+
+methodsMap :: [(RequestPurpose, ReqMethod)]
+methodsMap = [ (TelegramUpdates, Rget GET)
+             , (SlackUpdates,    Rget GET)
+             , (SlackChannels,   Rget GET)]
+
+getMethod :: RequestPurpose -> ReqMethod
+getMethod x = go x methodsMap
+    where go :: RequestPurpose -> [(RequestPurpose, ReqMethod)]-> ReqMethod
+          go r ((r',a):ms) | r == r'   = a
+                           | otherwise = go r ms
 
 
 newtype ConfigJSON = ConfigJSON
@@ -29,12 +44,12 @@ data Proxy = Proxy
     { proxyIp   :: String
     , proxyPort :: Int} deriving (Eq, Show)
 
+data RequestPurpose = TelegramUpdates
+                     |SlackUpdates
+                     |SlackChannels deriving (Eq, Ord, Show)
+
 data Messenger = Telegram 
                 |Slack  deriving (Eq, Show)
-
-data HTTPMethod = POST 
-                 |GET   deriving (Eq, Show)
-
 
 instance FromJSON Proxy where
     parseJSON (Object proxy) = Proxy <$> proxy .: "ip"
@@ -61,8 +76,8 @@ instance FromJSON ConfigJSON where
 
 data IMRequest = IMRequest
     { url       :: String
-    , method    :: HTTPMethod
     , proxy     :: Maybe Proxy
+    , target    :: RequestPurpose
     , messenger :: Messenger} deriving (Eq, Show)
 
 data RequestTimer = RequestTimer { requestDate :: UTCTime
