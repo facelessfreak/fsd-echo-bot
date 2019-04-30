@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7c406167d13c8b6e2b242203e4da526aa4a3ffbff9b83837ea2c4bc43eb8d814
+-- hash: 41aab3bf8182f4a19d956dca5a409fe86e687644f690cac3e67c4384a4c2ecc0
 
 name:           fsd
 version:        0.1.0.0
@@ -39,6 +39,7 @@ library
       aeson >=1.4.2.0
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
+    , http-client >=0.6.1
     , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1
@@ -57,6 +58,7 @@ executable fsd-exe
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , http-client >=0.6.1
     , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1
@@ -76,6 +78,7 @@ test-suite fsd-test
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , http-client >=0.6.1
     , mtl >=2.2.2
     , req >=2.0.0
     , text >=1.2.3.1

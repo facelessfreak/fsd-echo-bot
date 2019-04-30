@@ -27,6 +27,7 @@ dependencies:
 - bytestring >= 0.10.8.2
 - text >= 1.2.3.1
 - mtl >= 2.2.2
+- http-client >= 0.6.1
 
 library:
   source-dirs: src

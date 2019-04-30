@@ -7,6 +7,7 @@ import Data.Aeson
 import Control.Applicative((<$>), (<*>))
 import Control.Monad(mzero)
 import Network.HTTP.Req
+import Network.HTTP.Client(Proxy(Proxy))
 
 data ReqMethod = Rget GET | Rpost POST 
 
@@ -34,15 +35,15 @@ data JSONTelegram = JSONTelegram
     { t_token       :: String
     , t_rate        :: Int
     , t_useProxy    :: Bool
-    , t_proxy       :: Proxy}
+    , t_proxy       :: JSONProxy}
                                   
 data JSONSlack = JSONSlack
     { s_token   :: String
     , s_rate    :: Int}
 
-data Proxy = Proxy
-    { proxyIp   :: String
-    , proxyPort :: Int} deriving (Eq, Show)
+data JSONProxy = JSONProxy
+    { jProxyIp   :: String
+    , jProxyPort :: Int} deriving (Eq, Show)
 
 data RequestPurpose = TelegramUpdates
                      |SlackUpdates
@@ -51,9 +52,9 @@ data RequestPurpose = TelegramUpdates
 data Messenger = Telegram 
                 |Slack  deriving (Eq, Show)
 
-instance FromJSON Proxy where
-    parseJSON (Object proxy) = Proxy <$> proxy .: "ip"
-                                     <*> proxy .: "port"
+instance FromJSON JSONProxy where
+    parseJSON (Object proxy) = JSONProxy <$> proxy .: "ip"
+                                         <*> proxy .: "port"
 
 instance FromJSON JSONTelegram where
     parseJSON (Object tg) = JSONTelegram <$> tg .: "token"
@@ -77,7 +78,7 @@ instance FromJSON ConfigJSON where
 data IMRequest = IMRequest
     { url       :: String
     , proxy     :: Maybe Proxy
-    , target    :: RequestPurpose
+    , purpose   :: RequestPurpose
     , messenger :: Messenger} deriving (Eq, Show)
 
 data RequestTimer = RequestTimer { requestDate :: UTCTime
