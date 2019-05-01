@@ -1,4 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts #-}
+
 module Main where
 
 import           Lib
@@ -11,14 +13,13 @@ import qualified Telegram                      as TG
 import qualified Slack                         as SL
 
 import qualified Data.ByteString               as B
+import qualified Data.ByteString.Char8         as BC
 import           Data.Aeson
 import           Data.Aeson.Types
 import           Data.Text(Text)
 import           Data.List(sort)
-import           Data.Maybe( fromMaybe)
-import           Control.Monad.State
-import           Network.HTTP.Req
-import           Network.HTTP.Client(Proxy(Proxy))
+import           Data.Maybe( fromJust
+                           , fromMaybe)
 
 type RequestExhauster = [RequestTimer] -> ((IMRequest, UTCTime), [RequestTimer])
 
@@ -28,33 +29,28 @@ addMillisec sh = addUTCTime (fromRational (fromInteger sh / 1000))
 
 generateQueue :: UTCTime -> [(IMRequest, Integer)] -> [RequestTimer]
 generateQueue initTime reqRates = 
-    sort $ concatMap (\(req, rate) -> 
-        map (\x -> RequestTimer (addMillisec x initTime) req) [0,1..]) reqRates 
+    sort $ concatMap 
+    (\(req, rate) -> map (\x -> RequestTimer (addMillisec (x*rate) initTime) req) [0,1..]) reqRates 
 
 
 getNextIMRequest :: RequestExhauster
-getNextIMRequest (t:ts) = ((request t, requestDate t), ts)
+getNextIMRequest (t:ts) = ((requestData t, requestTime t), ts)
 
-tick :: UTCTime -> IO ()
-tick time = do
+await :: UTCTime -> IO ()
+await time = do
     currTime <- getCurrentTime
     if currTime >= time
         then return ()
-        else tick time
-
+        else await time
 
 go :: RequestExhauster -> [RequestTimer] -> IO()
 go exhauster rt = do
-    let ((request', requestUTC) , newRT) = exhauster rt
-    let method' = getMethod (purpose request')
-    let url'    = url request'
-    let proxy'  = proxy request'
-    let httpConfig' = defaultHttpConfig { httpConfigProxy = proxy'}
-    tick requestUTC
-    runReq httpConfig' $ do
-      --let (url'', options) = fromJust $ parseUrlHttps ulr'
-        return()
-    return ()
+    let ((requestData', requestTime') , requestTimers) = exhauster rt
+    let method'     = method    requestData'
+    let url'        = url       requestData'
+    let proxy'      = proxy     requestData'
+
+    await requestTime'
 
 
 main :: IO ()
@@ -64,7 +60,7 @@ main = do
     let config     = fromMaybe (error "Invalid token") result
 
     let tgUrl      = TG.getURLbyToken $ (t_token . ims_telegram . services) config
-    let tgMethod   = Rget GET
+    let tgMethod   = HttpGET
 
     return ()
 

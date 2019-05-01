@@ -6,23 +6,9 @@ import Data.Time.Clock(UTCTime)
 import Data.Aeson
 import Control.Applicative((<$>), (<*>))
 import Control.Monad(mzero)
-import Network.HTTP.Req
 import Network.HTTP.Client(Proxy(Proxy))
 
-data ReqMethod = Rget GET | Rpost POST 
-
-
-methodsMap :: [(RequestPurpose, ReqMethod)]
-methodsMap = [ (TelegramUpdates, Rget GET)
-             , (SlackUpdates,    Rget GET)
-             , (SlackChannels,   Rget GET)]
-
-getMethod :: RequestPurpose -> ReqMethod
-getMethod x = go x methodsMap
-    where go :: RequestPurpose -> [(RequestPurpose, ReqMethod)]-> ReqMethod
-          go r ((r',a):ms) | r == r'   = a
-                           | otherwise = go r ms
-
+data HttpMethod = HttpGET | HttpPOST deriving (Eq, Show)
 
 newtype ConfigJSON = ConfigJSON
     { services :: IMServices}
@@ -31,12 +17,12 @@ data IMServices = IMServices
     { ims_telegram :: JSONTelegram
     , ims_slack    :: JSONSlack}
 
-data JSONTelegram = JSONTelegram  
+data JSONTelegram = JSONTelegram
     { t_token       :: String
     , t_rate        :: Int
     , t_useProxy    :: Bool
     , t_proxy       :: JSONProxy}
-                                  
+
 data JSONSlack = JSONSlack
     { s_token   :: String
     , s_rate    :: Int}
@@ -49,7 +35,7 @@ data RequestPurpose = TelegramUpdates
                      |SlackUpdates
                      |SlackChannels deriving (Eq, Ord, Show)
 
-data Messenger = Telegram 
+data Messenger = Telegram
                 |Slack  deriving (Eq, Show)
 
 instance FromJSON JSONProxy where
@@ -72,17 +58,18 @@ instance FromJSON IMServices where
 
 instance FromJSON ConfigJSON where
     parseJSON (Object conf) = ConfigJSON <$> conf .: "services"
-                  
+
 
 
 data IMRequest = IMRequest
     { url       :: String
     , proxy     :: Maybe Proxy
+    , method    :: HttpMethod
     , purpose   :: RequestPurpose
     , messenger :: Messenger} deriving (Eq, Show)
 
-data RequestTimer = RequestTimer { requestDate :: UTCTime
-                                 , request     :: IMRequest} deriving (Eq, Show)
+data RequestTimer = RequestTimer { requestTime :: UTCTime
+                                 , requestData :: IMRequest} deriving (Eq, Show)
 
 instance Ord RequestTimer where
-    compare x y = compare (requestDate x) (requestDate y)
+    compare x y = compare (requestTime x) (requestTime y)
