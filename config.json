@@ -2,8 +2,7 @@
     "services":{
         "telegram":{
             "token":"849873568:AAGOHSWDcK13tziHGLimJdpJoOj0jq8qdS4",
-            "rate":10,
-            "useProxy":true,
+            "rate":2000,
             "proxy":{
                 "ip":"194.147.32.52",
                 "port":7654

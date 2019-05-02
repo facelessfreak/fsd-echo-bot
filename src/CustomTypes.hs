@@ -8,7 +8,11 @@ import Control.Applicative((<$>), (<*>))
 import Control.Monad(mzero)
 import Network.HTTP.Client(Proxy(Proxy))
 
-data HttpMethod = HttpGET | HttpPOST deriving (Eq, Show)
+data HttpMethod = HttpGET | HttpPOST deriving Eq
+
+instance Show HttpMethod where
+    show HttpGET  = "GET"
+    show HttpPOST = "POST"
 
 newtype ConfigJSON = ConfigJSON
     { services :: IMServices}
@@ -20,8 +24,7 @@ data IMServices = IMServices
 data JSONTelegram = JSONTelegram
     { t_token       :: String
     , t_rate        :: Int
-    , t_useProxy    :: Bool
-    , t_proxy       :: JSONProxy}
+    , t_proxy       :: Maybe JSONProxy}
 
 data JSONSlack = JSONSlack
     { s_token   :: String
@@ -43,10 +46,9 @@ instance FromJSON JSONProxy where
                                          <*> proxy .: "port"
 
 instance FromJSON JSONTelegram where
-    parseJSON (Object tg) = JSONTelegram <$> tg .: "token"
-                                         <*> tg .: "rate"
-                                         <*> tg .: "useProxy"
-                                         <*> tg .: "proxy"
+    parseJSON (Object tg) = JSONTelegram <$> tg .:  "token"
+                                         <*> tg .:  "rate"
+                                         <*> tg .:? "proxy"
 
 instance FromJSON JSONSlack where
     parseJSON (Object sl) = JSONSlack <$> sl .: "token"
@@ -62,11 +64,11 @@ instance FromJSON ConfigJSON where
 
 
 data IMRequest = IMRequest
-    { url       :: String
-    , proxy     :: Maybe Proxy
-    , method    :: HttpMethod
-    , purpose   :: RequestPurpose
-    , messenger :: Messenger} deriving (Eq, Show)
+    { imUrl       :: String
+    , imProxy     :: Maybe Proxy
+    , imMethod    :: HttpMethod
+    , imPurpose   :: RequestPurpose
+    , imMessenger :: Messenger} deriving (Eq, Show)
 
 data RequestTimer = RequestTimer { requestTime :: UTCTime
                                  , requestData :: IMRequest} deriving (Eq, Show)
