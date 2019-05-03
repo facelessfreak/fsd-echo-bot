@@ -7,7 +7,8 @@ import           Lib
 import           Data.Time.Clock( UTCTime
                                 , NominalDiffTime
                                 , addUTCTime
-                                , getCurrentTime)
+                                , getCurrentTime
+                                , diffUTCTime)
 import           CustomTypes 
 import qualified Telegram                      as TG
 import qualified Slack                         as SL
@@ -22,6 +23,7 @@ import           Data.Maybe( fromJust
                            , fromMaybe)
 import           Network.HTTP.Simple                           
 import           Network.HTTP.Client
+import           Control.Concurrent(threadDelay)
 
 type RequestExhauster = [RequestTimer] -> ((IMRequest, UTCTime), [RequestTimer])
 
@@ -48,10 +50,12 @@ wait :: UTCTime -> IO ()
 wait time = do
     currTime <- getCurrentTime
     if currTime >= time
-        then do
-             return ()
+        then return ()
         else do
-             wait time
+             let diffS = diffUTCTime time currTime
+             let diffMcs = floor $ diffS * 10^6
+             threadDelay diffMcs
+             return ()
 
 responseHandler :: BC.ByteString -> RequestPurpose -> IO ()
 responseHandler resBS _ = putStrLn $ BC.unpack resBS
@@ -60,9 +64,9 @@ convertProxy :: Maybe JSONProxy -> Maybe Proxy
 convertProxy (Just (JSONProxy jHost jPort)) = Just $ Proxy (BC.pack jHost) jPort
 convertProxy _                              = Nothing
 
-start :: RequestExhauster -> [RequestTimer] -> IO()
-start exhauster rt = do
-    let ((requestData', requestTime') , requestTimers) = exhauster rt
+start :: [RequestTimer] -> IO()
+start rt = do
+    let ((requestData', requestTime') , requestTimers) = getNextIMRequest rt
     let method'         = imMethod    requestData'
     let url'            = imUrl       requestData'
     let proxy'          = imProxy     requestData'
@@ -78,7 +82,7 @@ start exhauster rt = do
     let bodyResponseBS  = getResponseBody responseBS
     responseHandler bodyResponseBS purpose'
     
-    start exhauster requestTimers
+    start requestTimers
 
 main :: IO ()
 main = do
@@ -103,7 +107,7 @@ main = do
     currentTime <- getCurrentTime
     let requestTimers = makeRequestTimers currentTime [(tgRequest, toInteger tgRate)] 
 
-    start getNextIMRequest requestTimers
+    start requestTimers
 
     return ()
 
