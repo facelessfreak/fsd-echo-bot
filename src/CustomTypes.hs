@@ -10,6 +10,33 @@ import Network.HTTP.Client(Proxy(Proxy))
 
 data HttpMethod = HttpGET | HttpPOST deriving Eq
 
+data TelegramUser = TelegramUser { telegramUserId           :: Integer
+                                 , telegramUserIsBot        :: Bool
+                                 , telegramUserFirstName    :: String
+                                 , telegramUserLastName     :: String
+                                 , telegramUserUsername     :: String
+                                 , telegramUserLanguageCode :: String}
+
+data TelegramChat = TelegramChat { telegramChatId        :: Integer
+                                 , telegramChatFirstName :: String
+                                 , telegramChatLastName  :: String
+                                 , telegramChatUsername  :: String
+                                 , telegramChatType      :: String}
+
+data TelegramUpdateMessage = TelegramUpdateMessage { telegramUpdateMsgId   :: Int
+                                                   , telegramUpdateMsgFrom :: TelegramUser
+                                                   , telegramUpdateMsgChat :: TelegramChat
+                                                   , telegramUpdateMsgDate :: Integer
+                                                   , telegramUpdateMsgText :: String}
+
+data TelegramUpdateResult = 
+     TelegramUpdateResult { telegramUpdateResultId  :: Integer
+                          , telegramUpdateResultMsg :: TelegramUpdateMessage}
+
+data TelegramUpdateResponse = 
+     TelegramUpdateResponse { telegramUpdateOk     :: Bool
+                            , telegramUpdateResult :: [TelegramUpdateResult]}
+
 instance Show HttpMethod where
     show HttpGET  = "GET"
     show HttpPOST = "POST"
