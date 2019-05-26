@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f6ef0630090a06680587a430662d6f77372eb42cf6d5e3fa9e0ae267cc5f8a58
+-- hash: 944d56c642ea83c7c80fadde0f35534241ef181e1368a57ce1eabadcd5e2970e
 
 name:           fsd
 version:        0.1.0.0
@@ -27,10 +27,10 @@ source-repository head
 
 library
   exposed-modules:
-      CustomTypes
       Lib
       Slack
       Telegram
+      Types
   other-modules:
       Paths_fsd
   hs-source-dirs:

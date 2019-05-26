@@ -3,16 +3,14 @@
 
 module Main where
 
-import           Lib
 import           Data.Time.Clock( UTCTime
                                 , NominalDiffTime
                                 , addUTCTime
                                 , getCurrentTime
                                 , diffUTCTime)
-import           CustomTypes 
+import           Types 
 import qualified Telegram                      as TG
 import qualified Slack                         as SL
-
 import qualified Data.ByteString               as B
 import qualified Data.ByteString.Char8         as BC
 import           Data.Aeson
@@ -24,9 +22,6 @@ import           Data.Maybe( fromJust
 import           Network.HTTP.Simple                           
 import           Network.HTTP.Client
 import           Control.Concurrent(threadDelay)
-
-type RequestExhauster = [RequestTimer] -> ((IMRequest, UTCTime), [RequestTimer])
-
 
 addMillisec :: Integer -> UTCTime -> UTCTime
 addMillisec sh = addUTCTime (fromRational (fromInteger sh / 1000))
@@ -55,7 +50,6 @@ wait time = do
              let diffS = diffUTCTime time currTime
              let diffMcs = floor $ diffS * 10^6
              threadDelay diffMcs
-             return ()
 
 responseHandler :: BC.ByteString -> RequestPurpose -> IO ()
 responseHandler resBS _ = putStrLn $ BC.unpack resBS
@@ -108,7 +102,3 @@ main = do
     let requestTimers = makeRequestTimers currentTime [(tgRequest, toInteger tgRate)] 
 
     start requestTimers
-
-    return ()
-
-
