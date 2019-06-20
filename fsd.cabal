@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 944d56c642ea83c7c80fadde0f35534241ef181e1368a57ce1eabadcd5e2970e
+-- hash: bd0dca55be218529a89a186b9c50bf1a40ca77fbb85f4263337d4a6799fbba65
 
 name:           fsd
 version:        0.1.0.0
@@ -49,6 +49,7 @@ library
 executable fsd-exe
   main-is: Main.hs
   other-modules:
+      Main_
       Paths_fsd
   hs-source-dirs:
       app
