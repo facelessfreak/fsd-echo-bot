@@ -68,6 +68,8 @@ class ( IsLog a
 
 class IsLog a
 
+class IsConfig c
+
 class ( WorkWithRequest app req res log )
       => NestedRequests app req res log
       | app req -> res
@@ -84,6 +86,7 @@ class ( HasIO a )
       => Application (a :: * -> *)
 
 class ( Application a
+      , IsConfig c
       , MonadReader c a ) 
       => Configuration c (a :: * -> *) | a -> c
 
@@ -98,17 +101,22 @@ class ( Application a
 
 instance IsLog Log
 
+instance IsConfig AppConfig
+instance IsConfig TelegramConfig
+instance IsConfig SlackConfig
+
 instance Application App
 instance Application TelegramApp 
 instance Application SlackApp
 
 instance ( Application a ) 
-    => NestedRequests a IMRequest ResponseBS Log where
+         => NestedRequests a IMRequest ResponseBS Log where
     getNextRequest = undefined
 
 instance Configuration AppConfig App
 instance Configuration TelegramConfig TelegramApp
 instance Configuration SlackConfig SlackApp
+
 
 instance HTTPRequest IMRequest
 instance HTTPResponse ResponseBS

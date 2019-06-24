@@ -46,14 +46,16 @@ runTelegram a = runReaderT (unTgApp a)
 
 
 recursRequest :: 
-    ( NestedRequests m req res log ) 
+    ( NestedRequests m req res log
+    , Configuration c m ) 
     => PollingDelay
     -> req 
     -> m ()
 recursRequest delay req = do
-    ( logRes, res )          <- sendRequest req
-    ( logReq, maybeNextReq ) <- getNextRequest res
+    config <- getConfig
+    ( logRes, res ) <- sendRequest req
     outputLog logRes
+    ( logReq, maybeNextReq ) <- getNextRequest res
     outputLog logReq
     sleep delay
     recursRequest delay $ fromMaybe req maybeNextReq 
@@ -63,7 +65,7 @@ telegramApp :: ( Configuration TelegramConfig m )
                => m ()
 telegramApp = do
     config <- getConfig
-     
+    
     return()
 
 startSlack :: SlackConfig -> IO ()
