@@ -3,7 +3,7 @@
            , FlexibleInstances 
            , MultiParamTypeClasses 
            , AllowAmbiguousTypes
-           , FlexibleContexts#-}
+           , FlakffexibleContexts#-}
 
 module Main_ where
 
@@ -43,6 +43,7 @@ startTelegram = runTelegram telegramApp
 
 runTelegram :: TelegramApp a -> TelegramConfig -> IO a
 runTelegram a = runReaderT (unTgApp a)
+
 
 
 recursRequest :: 

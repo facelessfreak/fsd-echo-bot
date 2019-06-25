@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bd0dca55be218529a89a186b9c50bf1a40ca77fbb85f4263337d4a6799fbba65
+-- hash: 3c9e88b609bd027f919939475006cea77948e942262ea36a9e7810a4e93f5f30
 
 name:           fsd
 version:        0.1.0.0
@@ -27,9 +27,13 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
-      Slack
-      Telegram
+      HTTP
+      HTTP.Impl.Conduit
+      Logger
+      Logger.Impl.Console
+      Messenger
+      Messenger.Impl.Slack
+      Messenger.Impl.Telegram
       Types
   other-modules:
       Paths_fsd
@@ -39,17 +43,18 @@ library
       aeson >=1.4.2.0
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
+    , ghci >=8.6.4
     , http-client >=0.6.1
     , http-conduit >=2.3.7.1
     , mtl >=2.2.2
     , text >=1.2.3.1
     , time >=1.8.0.2
+    , ghci >=8.6.4
   default-language: Haskell2010
 
 executable fsd-exe
   main-is: Main.hs
   other-modules:
-      Main_
       Paths_fsd
   hs-source-dirs:
       app
@@ -59,11 +64,13 @@ executable fsd-exe
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , ghci >=8.6.4
     , http-client >=0.6.1
     , http-conduit >=2.3.7.1
     , mtl >=2.2.2
     , text >=1.2.3.1
     , time >=1.8.0.2
+    , ghci >=8.6.4
   default-language: Haskell2010
 
 test-suite fsd-test
@@ -79,6 +86,7 @@ test-suite fsd-test
     , base >=4.7 && <5
     , bytestring >=0.10.8.2
     , fsd
+    , ghci >=8.6.4
     , http-client >=0.6.1
     , http-conduit >=2.3.7.1
     , mtl >=2.2.2

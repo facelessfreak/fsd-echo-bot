@@ -1,4 +1,4 @@
-module Slack where
+module Messenger.Impl.Slack where
 
 getURLbyTokenAndChannel :: String -> String -> String
 getURLbyTokenAndChannel t ch =
