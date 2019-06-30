@@ -3,7 +3,7 @@
            , FlexibleInstances 
            , MultiParamTypeClasses 
            , AllowAmbiguousTypes
-           , FlakffexibleContexts#-}
+           , FlexibleContexts#-}
 
 module Main_ where
 
