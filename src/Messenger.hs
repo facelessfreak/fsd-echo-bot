@@ -2,13 +2,11 @@
 
 module Messenger 
     ( Handle
-    , MessengerResponse
-    , MessengerUpdate 
+    , Response
+    , Update 
     , MessageID (..)
-    , MessageHandleResult (..)
     , getUpdates
     , sendMessage
-    , handleContent
     , muContent
     , Text ) where
 
@@ -22,40 +20,27 @@ data ChatID
     = ChatIDNumber Integer
     | ChatIDString String
 
-data MessageCommand 
-    = Help
-    | Repeat
-    | SetRepeatCount Int
-
-data MessageHandleResult 
-    = Empty
-    | RepeatCount Int
-    | SendMessage Text
-
-data MessageContent
-    = MessageText Text
-    | MessageCommand MessageCommand
+data Content
+    = ContentText Text
     
-data MessageReceiver
-    = ChatId Int
+data Receiver
+    = ChatID Int
     | ChannelToken Int String
 
+data Response
 
-data MessengerResponse
-data MessengerUpdate 
-    = MessengerUpdate 
-        { muContent :: !(MessageContent) 
+data Update 
+    = Update 
+        { muContent :: !(Content) 
         , muId      :: !(MessageID)
-        , muChat    :: !(Integer)
+        , muChat    :: !(ChatID)
         }
 
 data Handle 
     = Handle
         { getUpdates    :: Maybe MessageID
-                           -> IO [MessengerUpdate]
-        , sendMessage   :: !( MessageReceiver 
-                           -> Text 
-                           -> IO MessengerResponse)
-        , handleContent :: !( MessageContent 
-                           -> IO MessageHandleResult)
+                           -> IO [Update]
+        , sendMessage   :: !( Receiver 
+                           -> Content 
+                           -> IO Response)
         }

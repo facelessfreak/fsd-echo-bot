@@ -18,6 +18,7 @@ import           Control.Monad.State
 import           Types
 import           Control.Concurrent ( forkIO
                                     , ThreadId)
+import qualified Data.Text                          as T
 
 getTelegramConfig 
     :: AppConfig 
@@ -54,6 +55,20 @@ setCount
 setCount c s
     = s { msCount = c }
 
+data MessengerTask
+    = SendMessage T.Text
+    | SetRepeatCount Int
+
+createTask
+    :: Messenger.Update 
+    -> MessengerTask
+createTask = undefined
+
+completeTask
+    :: MessengerTask
+    -> ()
+completeTask = undefined
+
 
 main :: IO ()
 main = do
@@ -62,23 +77,14 @@ main = do
     let slackConfig     = getSlackConfig config
     forkIO $
         Telegram.withHandle telegramConfig $ \h -> do
-            runStateT ( do 
+            runStateT (do 
                 updates <- lift $ Messenger.getUpdates h Nothing 
-                handleResults <- lift $ 
-                    mapM ( (Messenger.handleContent h) . Messenger.muContent) updates
-
-                mapM (\h -> case h of
-                            Messenger.RepeatCount c -> modify $ setCount c
-                            Messenger.SendMessage m -> return ()
-                                                    
-                                                          
-                     ) handleResults
-
-                mapM (\(Messenger.RepeatCount x) -> 
-                    modify (setCount x)) 
-                    $ filter (\r -> case r of
-                              Messenger.RepeatCount _ -> True
-                              otherwise               -> False) handleResults
+                let tasks = map createTask updates
+                mapM (\t -> 
+                        case t of
+                        SendMessage m -> return () 
+                        SetRepeatCount c -> modify $ setCount c
+                     ) tasks
                 return ()) (MessengerState 1 Nothing)
                 
             return () 
