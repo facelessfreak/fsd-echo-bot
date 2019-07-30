@@ -1,46 +1,20 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings #-}
 
-module Messenger 
-    ( Handle
-    , Response
-    , Update 
-    , MessageID (..)
-    , getUpdates
-    , sendMessage
-    , muContent
-    , Text ) where
+module Messenger where
 
-import Data.Text (Text)
+import Data.Text(Text)
 
-data MessageID
-    = MessageID Integer
-    | MessageTS Double
-    
-data ChatID
-    = ChatIDNumber Integer
-    | ChatIDString String
-
-data Content
-    = ContentText Text
-    
+data Message
 data Receiver
-    = ChatID Int
-    | ChannelToken Int String
+data Update
 
-data Response
-
-data Update 
-    = Update 
-        { muContent :: !(Content) 
-        , muId      :: !(MessageID)
-        , muChat    :: !(ChatID)
-        }
-
-data Handle 
+data Handle
     = Handle
-        { getUpdates    :: Maybe MessageID
-                           -> IO [Update]
-        , sendMessage   :: !( Receiver 
-                           -> Content 
-                           -> IO Response)
+        { getUpdates
+            :: IO [Update]
+        , send
+            :: Message
+            -> Receiver
+            -> IO ()
         }

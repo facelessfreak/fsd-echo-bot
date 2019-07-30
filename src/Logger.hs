@@ -11,6 +11,10 @@ data LogLevel
     | Fatal
     deriving (Eq, Ord)
 
+data LogMessage
+    = LogMessage { logText  :: Text
+                 , logLevel :: LogLevel}
+
 data Handle m = Handle
     { outputLog :: LogLevel -> Text -> m ()
     }

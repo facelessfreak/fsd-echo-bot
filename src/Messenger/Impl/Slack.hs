@@ -20,8 +20,8 @@ close =
 
 withHandle
     :: Config
-    -> (Handle -> IO a)
-    -> IO a
+    -> (Handle -> IO ())
+    -> IO ()
 withHandle =
     undefined
 

@@ -1,15 +1,15 @@
 module Messenger.Impl.Telegram 
     ( withHandle
+    , new
     , Config) where
 
 import Messenger
 
-data Config = Config {}
+data Config
 
-new 
-    :: Config 
+new :: Config 
     -> IO Handle
-new = 
+new = do
     undefined
 
 close 
@@ -20,11 +20,10 @@ close =
 
 withHandle
     :: Config
-    -> (Handle -> IO a)
-    -> IO a
+    -> (Handle -> IO ())
+    -> IO ()
 withHandle =
     undefined
-
 
 getURLbyToken :: String -> String
 getURLbyToken token = "https://api.telegram.org/bot" ++ token ++ "/getUpdates"
