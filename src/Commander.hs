@@ -1,7 +1,7 @@
 module Commander ( Handle) where
 
 import qualified EchoBot
-import qualified Messenger_ as Messenger
+import qualified Messenger as Messenger
 import Data.Text(Text)
 
 type Message = Messenger.Message
