@@ -1,13 +1,16 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Messenger where
+module Messenger
+    ( Handle   (..)
+    , Message  (..)
+    , Update   (..)
+    , Receiver (..) ) where
 
 import Data.Text(Text)
-
-data Message
-data Receiver
-data Update
+import Updater ( Message  (..)
+               , Receiver (..)
+               , Update   (..) )
 
 data Handle
     = Handle

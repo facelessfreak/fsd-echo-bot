@@ -9,13 +9,12 @@ data Config
 
 new :: Config
     -> IO Handle
-new = undefined
+new config = undefined
+    
 
-close
-    :: Handle
+close :: Handle
     -> IO ()
-close =
-    undefined
+close = undefined
 
 withHandle
     :: Config
