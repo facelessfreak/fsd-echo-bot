@@ -15,6 +15,7 @@ data Receiver
     = Receiver 
         { chat :: Either String Integer
         , user :: Either String Integer}
+        deriving (Eq, Ord )
 
 data Update
     = Update

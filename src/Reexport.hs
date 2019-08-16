@@ -25,6 +25,11 @@ module Reexport ( ByteString
                 , newChan
                 , readChan
                 , writeChan 
+
+                , Async
+                , async
+                , wait
+                , withAsync
                 
                 , MonadIO 
                 , liftIO 
@@ -60,6 +65,7 @@ import Control.Concurrent ( Chan
                           , writeChan )
 import Control.Concurrent.Async ( Async 
                                 , async
+                                , wait
                                 , withAsync )
 
 import Control.Monad.IO.Class ( MonadIO 

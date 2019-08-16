@@ -50,8 +50,11 @@ getUpdatesChannel config = do
         responseBS    <- getUpdateResponse config updateOffset_
         let results = getTelegramResultsFromResponse responseBS
         let updateIDs = map TelegramResponse.updateId results
-        writeIORef updateOffset $ Just (maximum updateIDs)
-        mapM_ (writeChan chan . createUpdate ) results
+        if (length updateIDs) == 0
+        then pure ()
+        else do
+            writeIORef updateOffset $ Just $ (maximum updateIDs) + 1
+            mapM_ (writeChan chan . createUpdate ) results
     pure (chan, threadId)
 
 getUpdateResponse
@@ -59,8 +62,8 @@ getUpdateResponse
     -> Maybe Integer
     -> IO (Response ByteString)
 getUpdateResponse config mbOffset = do
-    initRequest <- parseRequest $
-        updatesURLFromToken (token config) mbOffset
+    let url = updatesURLFromToken (token config) mbOffset
+    initRequest <- parseRequest url
     httpBS $ initRequest { method = "GET"
                          , proxy  = proxyServer config}
 
@@ -107,7 +110,7 @@ updatesURLFromToken
 updatesURLFromToken token mbOffset = 
     let offsetId = case mbOffset of
                    Nothing -> ""
-                   Just o  -> "/offset=" ++ show o
+                   Just o  -> "?offset=" ++ show o
     in  "https://api.telegram.org/bot" ++ token ++ "/getUpdates" ++ offsetId
 
 

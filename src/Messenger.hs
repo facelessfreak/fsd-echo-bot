@@ -1,23 +1,34 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+
 module Messenger
     ( Handle   (..)
     , Message  (..)
     , Update   (..)
-    , Receiver (..) ) where
+    , Receiver (..) 
+    , Keyboard (..) ) where
 
-import Data.Text(Text)
+import Reexport
 import Updater ( Message  (..)
                , Receiver (..)
                , Update   (..) )
+
+type Keyboard = [[String]]
 
 data Handle
     = Handle
         { getUpdates
             :: IO [Update]
+        , updatesChannel
+            :: IO (Chan Update)
         , send
             :: Message
+            -> Receiver
+            -> IO ()
+        , keyboard
+            :: Keyboard
+            -> Maybe Message
             -> Receiver
             -> IO ()
         }
