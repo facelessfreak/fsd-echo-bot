@@ -3,11 +3,12 @@
 
 
 module Messenger
-    ( Handle   (..)
-    , Message  (..)
-    , Update   (..)
-    , Receiver (..) 
-    , Keyboard (..) ) where
+    ( Handle       (..)
+    , Message      (..)
+    , Update       (..)
+    , Receiver     (..) 
+    , Keyboard     (..) 
+    , KeyboardMode (..) ) where
 
 import Reexport
 import Updater ( Message  (..)
@@ -15,6 +16,9 @@ import Updater ( Message  (..)
                , Update   (..) )
 
 type Keyboard = [[String]]
+data KeyboardMode 
+    = CreateKbd Keyboard
+    | RemoveKbd
 
 data Handle
     = Handle
@@ -27,7 +31,7 @@ data Handle
             -> Receiver
             -> IO ()
         , keyboard
-            :: Keyboard
+            :: KeyboardMode
             -> Maybe Message
             -> Receiver
             -> IO ()

@@ -23,7 +23,10 @@ import qualified Data.Map as Map
 data Env = Env { messenger :: Messenger.Handle
                , logger    :: Logger.Handle } 
 
-data BotState = BotState { repeatCount :: Int }
+data BotMode = Normal | InsertCount
+
+data BotState = BotState { repeatCount :: Int 
+                         , botMode     :: BotMode }
 
 newtype App a = 
     App { unApp :: ReaderT Env IO a }
@@ -68,11 +71,12 @@ instance Logging App where
     logFatal   = toLog Logger.Fatal
 
 class (Has IM m, MonadIO m) => WithMessenger m where
-    getUpdates   :: m [Update]
-    getChannel   :: m (Chan Update)
-    sendMessage  :: Text -> Receiver -> m ()
-    sendKeyboard :: Text -> Receiver -> [[String]] -> m ()
-    getText      :: Message -> m Text
+    getUpdates      :: m [Update]
+    getChannel      :: m (Chan Update)
+    sendMessage     :: Text -> Receiver -> m ()
+    sendKeyboard    :: Text -> Receiver -> [[String]] -> m ()
+    removeKeyboard  :: Text -> Receiver -> m ()
+    getText         :: Message -> m Text
 
 instance WithMessenger App where
     getUpdates = do
@@ -88,7 +92,11 @@ instance WithMessenger App where
     sendKeyboard t r kb = do
         handler <- get
         let message = Message t
-        liftIO $ Messenger.keyboard handler kb (Just message) r
+        liftIO $ Messenger.keyboard handler (Messenger.CreateKbd kb) (Just message) r
+    removeKeyboard t r = do
+        handler <- get
+        let message = Message t
+        liftIO $ Messenger.keyboard handler (Messenger.RemoveKbd ) (Just message) r
     getText (Message t) = pure t
 
 
@@ -97,7 +105,7 @@ class (MonadIO m) => WithState m where
     insertToMap :: IORef StateMap
                 -> Updater.Receiver 
                 -> BotState
-                -> m (IORef StateMap)
+                -> m ()
     readFromMap :: IORef StateMap
                 -> Updater.Receiver
                 -> m (Maybe BotState)
@@ -108,7 +116,6 @@ instance WithState App where
         m_ <- liftIO $ readIORef m
         let newM = Map.insert k v m_
         liftIO $ writeIORef m newM
-        pure m
     readFromMap m k = do
         m_ <- liftIO $ readIORef m
         pure $ Map.lookup k m_
@@ -143,26 +150,53 @@ runBot ::
     => m ()
 runBot = do
     stateMap <- newMap
+    channel  <- getChannel
     forever $ do
-        channel <- getChannel
         update  <- liftIO $ readChan channel
         let receiver_ = receiver update
+        maybeState  <- readFromMap stateMap receiver_
+        let currentState = 
+                case maybeState of
+                    Nothing -> getDefaultBotState
+                    Just st -> st
         textMessage <- getText $ message update
-        case textMessage of
-            "/help" -> sendKeyboard "Help text" receiver_ 
-                            [ ["1","2"] ]
-            otherwise -> do
-                    maybeState <- readFromMap stateMap receiver_
-                    let count = 
-                            case maybeState of
-                                Nothing -> 2
-                                Just st -> repeatCount st
-                    sequence_ 
-                        $ take count 
-                        $ repeat 
-                        $ sendMessage textMessage receiver_
-                    logTrace textMessage
-        return ()
+        logTrace textMessage
+        case botMode currentState of
+            Normal      -> do
+                case textMessage of
+                    "/help"     -> do
+                        sendMessage "Placeholder for help message" receiver_
+                    "/repeat"   -> do 
+                        sendKeyboard "Placeholder for repeat message" receiver_
+                            [ ["1", "2"] 
+                            , ["3", "4"]
+                            , ["5", "Cancel"] ]
+                        insertToMap stateMap receiver_ $ 
+                            currentState { botMode = InsertCount }
+                    otherwise   -> do 
+                        let count = repeatCount currentState
+                        sequence_
+                            $ take count
+                            $ repeat
+                            $ sendMessage textMessage receiver_
+            InsertCount -> do
+                let newCount =
+                        case textMessage of
+                            "1"         -> 1
+                            "2"         -> 2
+                            "3"         -> 3
+                            "4"         -> 4
+                            "5"         -> 5
+                            otherwise   -> repeatCount currentState
+                removeKeyboard 
+                    (tPack $ "Current repeat count is " ++ (show newCount))
+                    receiver_
+                insertToMap stateMap receiver_ $
+                    currentState { repeatCount = newCount 
+                                 , botMode     = Normal }
 
-
+getDefaultBotState :: BotState
+getDefaultBotState =
+    BotState { repeatCount = 1 
+             , botMode     = Normal }
 

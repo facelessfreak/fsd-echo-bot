@@ -9,6 +9,8 @@ import qualified Logger
 import qualified Logger.Impl.Console as Console
 import qualified Parsing.Config as Config
 
+import qualified Updater.Impl.SlackPolling
+
 import Network.HTTP.Simple ( Proxy (..) )
 import Data.Aeson ( decodeStrict )
 import System.Exit

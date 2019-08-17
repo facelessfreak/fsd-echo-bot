@@ -15,13 +15,16 @@ instance ToJSON Keybutton where
     toEncoding (Keybutton keyT ) =
         pairs ( "text" .= keyT )
 
-data Keyboard = Keyboard [[Keybutton]]
+data Keyboard 
+    = Keyboard [[Keybutton]]
+    | RemoveKeyboard
 
 instance ToJSON Keyboard where
     toJSON (Keyboard kb ) =
-        object ["inline_keyboard" .= kb ]
-    toEncoding (Keyboard kb ) =
-        pairs ( "inline_keyboard" .= kb )
+        object ["keyboard" .= kb ]
+    toJSON (RemoveKeyboard) =
+        object ["remove_keyboard" .= True ]
+
 
 data SendMessage = SendMessage
     { text     :: Text

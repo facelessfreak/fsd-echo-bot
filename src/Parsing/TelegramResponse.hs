@@ -39,16 +39,16 @@ data Message = Message
     , date      :: Integer
     , from      :: From
     , messageId :: Integer
-    , text      :: Text }
+    , text      :: Maybe Text }
 
 instance FromJSON Message where
     parseJSON (Object m) =
         Message
-            <$> m .: "chat"
-            <*> m .: "date"
-            <*> m .: "from"
-            <*> m .: "message_id"
-            <*> m .: "text"
+            <$> m .:  "chat"
+            <*> m .:  "date"
+            <*> m .:  "from"
+            <*> m .:  "message_id"
+            <*> m .:? "text"
 
 data Chat = Chat
     { chatFirstName :: Text
@@ -70,7 +70,6 @@ data From = From
     { fromFirstName     :: Text
     , fromId            :: Integer
     , isBot             :: Bool
-    , fromLanguageCode  :: Text
     , fromLastName      :: Text
     , fromUserName      :: Text }
 
@@ -80,6 +79,5 @@ instance FromJSON From where
             <$> f .: "first_name"
             <*> f .: "id"
             <*> f .: "is_bot"
-            <*> f .: "language_code"
             <*> f .: "last_name"
             <*> f .: "username"

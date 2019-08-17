@@ -45,12 +45,12 @@ new config h = do
             responseBS <- getSendMessageResponse config m Nothing r
             putStrLn $ bUnpack $ getResponseBody responseBS
             pure () 
-        , keyboard = \k maybeM r -> do
+        , keyboard = \kbdMode maybeM r -> do
             let message =
                     case maybeM of
                         Nothing -> Message "Choose from a variants"
                         Just m  -> m
-            responseBS <- getSendMessageResponse config message (Just k) r
+            responseBS <- getSendMessageResponse config message (Just kbdMode) r
             putStrLn $ bUnpack $ getResponseBody responseBS
             pure ()
         }
@@ -58,7 +58,7 @@ new config h = do
 getSendMessageResponse
     :: Config
     -> Message
-    -> Maybe Keyboard
+    -> Maybe KeyboardMode
     -> Receiver
     -> IO (Response ByteString)
 getSendMessageResponse config message mbKeyboard receiver = do
@@ -138,7 +138,7 @@ createKeyboard = TelegramBody.Keyboard
 createRequestBody
     :: ChatID
     -> Text
-    -> Maybe Keyboard
+    -> Maybe KeyboardMode
     -> RequestBody
 createRequestBody chatId text mbKeyboard =
     let tBody = TelegramBody.SendMessage 
@@ -146,6 +146,11 @@ createRequestBody chatId text mbKeyboard =
                     , TelegramBody.chatId   = chatId
                     , TelegramBody.keyboard = 
                         case mbKeyboard of
-                            Nothing -> Nothing
-                            Just k  -> Just $ ( createKeyboard . createKeybuttons) k }
+                            Nothing     -> Nothing
+                            Just kMode  -> 
+                                case kMode of
+                                    CreateKbd k -> 
+                                        Just $ ( createKeyboard . createKeybuttons) k 
+                                    RemoveKbd  -> 
+                                        Just TelegramBody.RemoveKeyboard }
     in RequestBodyLBS $ encode tBody
