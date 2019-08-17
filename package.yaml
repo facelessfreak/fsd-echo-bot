@@ -31,6 +31,8 @@ dependencies:
 - ghci >= 8.6.4
 - containers >= 0.6.0.1
 - async >= 2.2.1
+- unliftio-core >= 0.1.2.0
+- http-types >= 0.12.3
 
 library:
   source-dirs: src

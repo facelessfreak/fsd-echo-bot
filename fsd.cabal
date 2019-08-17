@@ -1,0 +1,115 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1f808155dfe61d3e23473451441f8016f0a9b14e0cdebfe66dc3d0fc69b4fbb3
+
+name:           fsd
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/fsd#readme>
+homepage:       https://github.com/githubuser/fsd#readme
+bug-reports:    https://github.com/githubuser/fsd/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/fsd
+
+library
+  exposed-modules:
+      App
+      Commander
+      Commander.Impl.Telegram
+      HTTP
+      HTTP.Impl.Conduit
+      Logger
+      Logger.Impl.Console
+      Messenger
+      Messenger.Impl.Slack
+      Messenger.Impl.Telegram
+      Messenger_
+      Parsing.Config
+      Parsing.TelegramBody
+      Parsing.TelegramResponse
+      Reexport
+      Types
+      Updater
+      Updater.Impl.TelegramPolling
+  other-modules:
+      Paths_fsd
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson >=1.4.2.0
+    , async >=2.2.1
+    , base >=4.7 && <5
+    , bytestring >=0.10.8.2
+    , containers >=0.6.0.1
+    , ghci >=8.6.4
+    , http-client >=0.6.1
+    , http-conduit >=2.3.7.1
+    , http-types >=0.12.3
+    , mtl >=2.2.2
+    , text >=1.2.3.1
+    , time >=1.8.0.2
+    , unliftio-core >=0.1.2.0
+  default-language: Haskell2010
+
+executable fsd-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_fsd
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson >=1.4.2.0
+    , async >=2.2.1
+    , base >=4.7 && <5
+    , bytestring >=0.10.8.2
+    , containers >=0.6.0.1
+    , fsd
+    , ghci >=8.6.4
+    , http-client >=0.6.1
+    , http-conduit >=2.3.7.1
+    , http-types >=0.12.3
+    , mtl >=2.2.2
+    , text >=1.2.3.1
+    , time >=1.8.0.2
+    , unliftio-core >=0.1.2.0
+  default-language: Haskell2010
+
+test-suite fsd-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_fsd
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson >=1.4.2.0
+    , async >=2.2.1
+    , base >=4.7 && <5
+    , bytestring >=0.10.8.2
+    , containers >=0.6.0.1
+    , fsd
+    , ghci >=8.6.4
+    , http-client >=0.6.1
+    , http-conduit >=2.3.7.1
+    , http-types >=0.12.3
+    , mtl >=2.2.2
+    , text >=1.2.3.1
+    , time >=1.8.0.2
+    , unliftio-core >=0.1.2.0
+  default-language: Haskell2010

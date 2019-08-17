@@ -10,7 +10,9 @@ import Updater
 import qualified Parsing.TelegramResponse as TelegramResponse
 import Network.HTTP.Simple
 import Network.HTTP.Client 
-import Data.Aeson ( decodeStrict )
+import Data.Aeson ( eitherDecodeStrict )
+import qualified Data.Map as Map
+import Data.Maybe ( fromMaybe )
 
 
 data Config
@@ -48,10 +50,13 @@ getUpdatesChannel config = do
     threadId     <- forkIO $ forever $ do
         updateOffset_ <- readIORef updateOffset
         responseBS    <- getUpdateResponse config updateOffset_
-        let results = getTelegramResultsFromResponse responseBS
+        results <- getTelegramResultsFromResponse responseBS
         let updateIDs = map TelegramResponse.updateId results
-        writeIORef updateOffset $ Just (maximum updateIDs)
-        mapM_ (writeChan chan . createUpdate ) results
+        if (length updateIDs) == 0
+        then pure ()
+        else do
+            writeIORef updateOffset $ Just $ (maximum updateIDs) + 1
+            mapM_ (writeChan chan . createUpdate ) results
     pure (chan, threadId)
 
 getUpdateResponse
@@ -59,26 +64,29 @@ getUpdateResponse
     -> Maybe Integer
     -> IO (Response ByteString)
 getUpdateResponse config mbOffset = do
-    initRequest <- parseRequest $
-        updatesURLFromToken (token config) mbOffset
+    let url = updatesURLFromToken (token config) mbOffset
+    initRequest <- parseRequest url
     httpBS $ initRequest { method = "GET"
                          , proxy  = proxyServer config}
 
 getTelegramResultsFromResponse
     :: Response ByteString
-    -> [TelegramResponse.Result]
+    -> IO [TelegramResponse.Result]
 getTelegramResultsFromResponse responseBS =
-    let maybeResponse = tryDecodeResponse responseBS
-    in  case maybeResponse of
-        Nothing -> []
-        Just response -> TelegramResponse.result response
+    let eitherResponse = tryDecodeResponse responseBS
+    in  case eitherResponse of
+            Left e -> do
+                putStrLn "Can't decode Telegram response"
+                putStrLn e
+                error "error"
+            Right response -> pure $ TelegramResponse.result response
 
 tryDecodeResponse
     :: Response ByteString
-    -> Maybe TelegramResponse.Response
+    -> Either String TelegramResponse.Response
 tryDecodeResponse responseBS =
     let responseBodyBS = getResponseBody responseBS
-    in  decodeStrict responseBodyBS
+    in  eitherDecodeStrict responseBodyBS
 
 createUpdate
     :: TelegramResponse.Result
@@ -96,7 +104,8 @@ createUpdate result =
                 . TelegramResponse.chat 
                 . TelegramResponse.message ) result }
         , message = Message $
-            ( TelegramResponse.text
+            ( fromMaybe "empty"
+            . TelegramResponse.text
             . TelegramResponse.message ) result }
     
 
@@ -107,7 +116,5 @@ updatesURLFromToken
 updatesURLFromToken token mbOffset = 
     let offsetId = case mbOffset of
                    Nothing -> ""
-                   Just o  -> "/offset=" ++ show o
+                   Just o  -> "?offset=" ++ show o
     in  "https://api.telegram.org/bot" ++ token ++ "/getUpdates" ++ offsetId
-
-
