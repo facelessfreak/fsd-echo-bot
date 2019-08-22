@@ -42,7 +42,11 @@ module Reexport ( ByteString
                 , readIORef
                 , writeIORef 
                 
-                , forever ) where
+                , forever 
+                
+                , fromMaybe
+                , fromLeft
+                , fromRight ) where
 
 import Data.ByteString.Char8 as B
 import Data.Text as T
@@ -80,6 +84,10 @@ import Data.IORef ( IORef
                   , writeIORef )
 
 import Control.Monad ( forever )
+
+import Data.Maybe ( fromMaybe )
+import Data.Either ( fromLeft 
+                   , fromRight )
 
  
 tPack   = T.pack
