@@ -32,13 +32,12 @@ new
 new config' updater' = do
   let pollingConfig = createPollingConfig config'
   pure Handle
-    { getUpdates     = undefined
-    , updatesChannel = undefined
-    , send           = undefined
+    { getUpdates     = Updater.getUpdates updater'
+    , updatesChannel = Updater.updatesChannel updater'
+    , send           = \ m r -> do
+        undefined
     , keyboard       = undefined
     }
-
-
 
 close 
   :: Handle
