@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1f808155dfe61d3e23473451441f8016f0a9b14e0cdebfe66dc3d0fc69b4fbb3
+-- hash: 287b0927cfe4580b97179a6310675b5cc0a04865debd15ad46b70e96c809e9ec
 
 name:           fsd
 version:        0.1.0.0
@@ -39,11 +39,14 @@ library
       Messenger.Impl.Telegram
       Messenger_
       Parsing.Config
+      Parsing.SlackIMHistory
+      Parsing.SlackIMList
       Parsing.TelegramBody
       Parsing.TelegramResponse
       Reexport
       Types
       Updater
+      Updater.Impl.SlackPolling
       Updater.Impl.TelegramPolling
   other-modules:
       Paths_fsd
