@@ -43,6 +43,7 @@ module Reexport ( ByteString
                 , writeIORef 
                 
                 , forever 
+                , when
                 
                 , fromMaybe
                 , fromLeft
@@ -83,7 +84,8 @@ import Data.IORef ( IORef
                   , readIORef
                   , writeIORef )
 
-import Control.Monad ( forever )
+import Control.Monad ( forever 
+                     , when )
 
 import Data.Maybe ( fromMaybe )
 import Data.Either ( fromLeft 

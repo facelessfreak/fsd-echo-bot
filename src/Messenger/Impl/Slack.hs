@@ -18,6 +18,12 @@ data Config =
   Config { token       :: String
          , proxyServer :: Maybe Proxy }
 
+type Token        = String
+type URL          = String
+type APIMethod    = String
+type RawResponse  = Response ByteString
+
+
 createPollingConfig
   :: Config
   -> Polling.Config
@@ -34,10 +40,36 @@ new config' updater' = do
   pure Handle
     { getUpdates     = Updater.getUpdates updater'
     , updatesChannel = Updater.updatesChannel updater'
-    , send           = \ m r -> do
-        undefined
+    , send           = \ message' receiver' -> do 
+      undefined
     , keyboard       = undefined
     }
+
+sendMessage
+  :: Config
+  -> Message
+  -> Receiver
+  -> IO RawResponse
+sendMessage config' message' receiver'  = do
+  let channel'  = fromLeft "" $ chat receiver'
+  when (channel' == "") $ do 
+    -- TODO : logging
+    pure ()
+  let token'    = token config'
+  let url'      = getAPIURL token' $ "chat.postMessage" 
+  initRequest   <- parseRequest $ 
+    url' <> "&channel=" <> channel'
+  undefined
+
+getAPIURL
+  :: Token
+  -> APIMethod
+  -> URL
+getAPIURL token' apiMethod' =
+  "https://slack.com/api/" <> apiMethod'
+  <> "?token=" <> token'
+
+
 
 close 
   :: Handle

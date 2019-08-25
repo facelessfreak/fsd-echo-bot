@@ -6,15 +6,15 @@ module Main where
 import Reexport
 
 import qualified Logger
-import qualified Logger.Impl.Console as Console
-import qualified Parsing.Config as Config
-import Network.HTTP.Simple ( Proxy (..) )
-import Data.Aeson ( decodeStrict )
-import System.Exit
-import System.Environment
-import Messenger.Impl.Telegram as Telegram
-import App ( runApp 
-           , Env (..) )
+import qualified Logger.Impl.Console     as Console
+import qualified Parsing.Config          as Config
+import           Messenger.Impl.Telegram as Telegram
+import           Network.HTTP.Simple        ( Proxy (..) )
+import           Data.Aeson                 ( decodeStrict )
+import           System.Exit
+import           System.Environment
+import           App                        ( runApp 
+                                            , Env (..) )
 
 logFatal
   :: Logger.Handle
@@ -52,7 +52,6 @@ getTelegramConfig
 getTelegramConfig m =
   Telegram.Config { Telegram.token = getToken m
                   , Telegram.proxyServer = getMaybeProxy m }
-
 
 runAppWithEnv
   :: Config.Messenger

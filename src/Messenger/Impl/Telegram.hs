@@ -43,10 +43,9 @@ new config h = do
     { getUpdates = Updater.getUpdates h
     , updatesChannel = Updater.updatesChannel h
     , send = \m r -> do 
-      responseBS <- getSendMessageResponse config m Nothing r
-      putStrLn $ bUnpack $ getResponseBody responseBS
-      pure () 
-    , keyboard = \kbdMode maybeM r -> do
+        responseBS <- getSendMessageResponse config m Nothing r
+        pure () 
+    , keyboard = \kbdMode maybeM r -> do 
       let message =
             case maybeM of
               Nothing -> Message "Choose from a variants"
