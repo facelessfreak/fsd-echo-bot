@@ -131,8 +131,9 @@ createKeybuttons
   :: Keyboard
   -> [[TelegramBody.Keybutton]]
 createKeybuttons kb =
-  map (\k1 -> map ( \k2 -> TelegramBody.Keybutton k2
-                  ) k1
+  map (\k1 -> map 
+  ( \k2 -> TelegramBody.Keybutton k2
+  ) k1
       ) kb
 
 createKeyboard
