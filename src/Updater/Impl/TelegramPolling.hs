@@ -8,6 +8,8 @@ module Updater.Impl.TelegramPolling ( new
 import Reexport
 import Updater
 import qualified Parsing.TelegramResponse as TelegramResponse
+import qualified Logger as Logger 
+import qualified Logger.Impl.Console as Console
 import Network.HTTP.Simple
 import Network.HTTP.Client 
 import Data.Aeson ( eitherDecodeStrict )

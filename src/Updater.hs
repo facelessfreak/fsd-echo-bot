@@ -1,7 +1,7 @@
-module Updater ( Update (..)
+module Updater ( Update   (..)
                , Receiver (..)
-               , Message (..)
-               , Handle (..) ) where
+               , Message  (..)
+               , Handle   (..) ) where
 
 import Control.Concurrent ( Chan
                           , ThreadId )

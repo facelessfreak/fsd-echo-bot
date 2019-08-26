@@ -86,6 +86,7 @@ close = const $ pure ()
 
 withHandle
   :: Config
+--TODO: Passing Updater.Handle 
   -> (Handle -> IO ())
   -> IO ()
 withHandle config action = do
