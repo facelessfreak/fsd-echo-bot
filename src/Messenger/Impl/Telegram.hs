@@ -16,6 +16,8 @@ import Data.Aeson
 import qualified Data.ByteString.Lazy
 import qualified Updater
 import qualified Updater.Impl.TelegramPolling as Polling
+import qualified Logger
+import qualified Logger.Impl.Console as Console
 import qualified Parsing.TelegramBody as TelegramBody
 
 type Token  = String
@@ -36,22 +38,26 @@ convertConfig config =
 new 
   :: Config
   -> Updater.Handle
+  -> Logger.Handle
   -> IO Handle
-new config h = do
-  let pollingConfig = convertConfig config
+new config' updater' logger' = do
   pure Handle
-    { getUpdates = Updater.getUpdates h
-    , updatesChannel = Updater.updatesChannel h
-    , send = \m r -> do 
+    { getUpdates     = Updater.getUpdates updater'
+    , updatesChannel = Updater.updatesChannel updater'
+    , send = \ m r -> do 
         responseBS <- getSendMessageResponse config m Nothing r
+        Logger.logTrace logger' $
+          ( tPack
+          . bUnpack
+          . getResponseBody ) responseBS
         pure () 
-    , keyboard = \kbdMode maybeM r -> do 
-      let message =
-            case maybeM of
-              Nothing -> Message "Choose from a variants"
-              Just m  -> m
+    , keyboard = \ kbdMode maybeM r -> do 
+      let message = fromMaybe (Message "Choose from variants") maybeM
       responseBS <- getSendMessageResponse config message (Just kbdMode) r
-      putStrLn $ bUnpack $ getResponseBody responseBS
+      Logger.logTrace logger' $
+        ( tPack
+        . bUnpack
+        . getResponseBody ) responseBS
       pure ()
     }
 
@@ -86,10 +92,11 @@ close = const $ pure ()
 
 withHandle
   :: Config
---TODO: Passing Updater.Handle 
+  -> Updater.Handle
+  -> Logger.Handle
   -> (Handle -> IO ())
   -> IO ()
-withHandle config action = do
+withHandle config' updater' logger' action' = do
   let pollingConfig = convertConfig config
   Polling.withHandle pollingConfig $ \h ->
     bracket (new config h ) close action

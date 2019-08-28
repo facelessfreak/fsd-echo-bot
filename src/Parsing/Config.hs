@@ -5,23 +5,19 @@ module Parsing.Config where
 
 import Reexport
 import Data.Aeson
+import qualified Types
 
-data Messenger = Messenger
-    { name  :: Text 
-    , token :: Text
-    , proxy :: Maybe Proxy }
+data Configuration = 
+  Configuration
+    { messengers :: [Types.Messenger] }
 
-instance FromJSON Messenger where
+instance FromJSON Types.Messenger where
     parseJSON (Object m) =
-        Messenger <$> m .: "name"
-                  <*> m .: "token"
+        Messenger <$> m .:  "name"
+                  <*> m .:  "token"
                   <*> m .:? "proxy"
 
-data Proxy = Proxy
-    { host :: Text
-    , port :: Int }
-
-instance FromJSON Proxy where
+instance FromJSON Types.Proxy where
     parseJSON (Object p) =
         Proxy <$> p .: "host"
               <*> p .: "port"

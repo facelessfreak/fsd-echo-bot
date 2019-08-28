@@ -10,6 +10,7 @@ import Updater
 import qualified Parsing.TelegramResponse as TelegramResponse
 import qualified Logger as Logger 
 import qualified Logger.Impl.Console as Console
+import qualified Types
 import Network.HTTP.Simple
 import Network.HTTP.Client 
 import Data.Aeson ( eitherDecodeStrict )
@@ -20,7 +21,7 @@ import Data.Maybe ( fromMaybe )
 data Config
     = Config
         { token       :: String
-        , proxyServer :: Maybe Proxy }
+        , proxyServer :: Maybe Types.Proxy }
 
 new :: Config
     -> IO Handle
