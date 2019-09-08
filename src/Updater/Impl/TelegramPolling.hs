@@ -16,12 +16,11 @@ import Network.HTTP.Client
 import Data.Aeson ( eitherDecodeStrict )
 import qualified Data.Map as Map
 import Data.Maybe ( fromMaybe )
+import qualified Types
 
 
-data Config
-    = Config
-        { token       :: String
-        , proxyServer :: Maybe Types.Proxy }
+newtype Config
+    = Config { settings :: Types.MessengerSettings }
 
 new :: Config
     -> IO Handle
@@ -66,11 +65,14 @@ getUpdateResponse
     :: Config
     -> Maybe Integer
     -> IO (Response ByteString)
-getUpdateResponse config mbOffset = do
-    let url = updatesURLFromToken (token config) mbOffset
-    initRequest <- parseRequest url
-    httpBS $ initRequest { method = "GET"
-                         , proxy  = proxyServer config}
+getUpdateResponse config' mbOffset = do
+  let settings' = settings config'
+      token'    = Types.token settings'
+      mbProxy'  = Types.proxy settings'
+      url       = updatesURLFromToken token' mbOffset
+  initRequest <- parseRequest url
+  httpBS $ initRequest { method = "GET"
+                       , proxy  = undefined }
 
 getTelegramResultsFromResponse
     :: Response ByteString

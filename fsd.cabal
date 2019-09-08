@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 287b0927cfe4580b97179a6310675b5cc0a04865debd15ad46b70e96c809e9ec
+-- hash: 6c2c1564c1550b161c4a8e2d6b68996ee563064e58af5dc265dfb3ebb36fe37a
 
 name:           fsd
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       App
       Commander
       Commander.Impl.Telegram
+      Core
       HTTP
       HTTP.Impl.Conduit
       Logger

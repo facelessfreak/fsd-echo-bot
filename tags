@@ -1,16 +1,5 @@
-(Application a) => NestedRequests a IMRequest ResponseBS Log	./src/Types.hs	112
-(Application a) => WorkWithRequest a IMRequest ResponseBS Log	./src/Types.hs	132
-(Application a, IsLog l) => WithLogging a l	./src/Types.hs	127
-(HTTPRequest req, HTTPResponse res) => HasHTTP req res	./src/Types.hs	124
 APIMethod	./src/Messenger/Impl/Slack.hs	23
 App	./src/App.hs	32
-App	./src/Types.hs	193
-AppConfig	./src/Types.hs	176
-AppConfig	./src/Types.hs	177
-Application	./src/Types.hs	86
-Application App	./src/Types.hs	108
-Application SlackApp	./src/Types.hs	110
-Application TelegramApp	./src/Types.hs	109
 BotMode	./src/App.hs	27
 BotState	./src/App.hs	29
 BotState	./src/App.hs	29
@@ -28,60 +17,40 @@ Config	./src/Messenger/Impl/Telegram.hs	26
 Config	./src/Messenger/Impl/Telegram.hs	27
 Config	./src/Updater/Impl/SlackPolling.hs	23
 Config	./src/Updater/Impl/SlackPolling.hs	23
-Config	./src/Updater/Impl/TelegramPolling.hs	20
 Config	./src/Updater/Impl/TelegramPolling.hs	21
-ConfigJSON	./src/Types.hs	322
-Configuration	./src/Types.hs	91
-Configuration AppConfig App	./src/Types.hs	116
-Configuration SlackConfig SlackApp	./src/Types.hs	118
-Configuration TelegramConfig TelegramApp	./src/Types.hs	117
+Config	./src/Updater/Impl/TelegramPolling.hs	22
+Configuration	./src/Parsing/Config.hs	10
+Configuration	./src/Parsing/Config.hs	11
 Count	./src/Commander.hs	10
 CreateKbd	./src/Messenger.hs	20
 Debug	./src/Logger.hs	16
-Debug	./src/Types.hs	225
 EchoMessage	./src/Commander.hs	13
 Env	./src/App.hs	24
 Env	./src/App.hs	24
 Err	./src/Parsing/SlackIMHistory.hs	16
 Err	./src/Parsing/SlackIMList.hs	15
 Error	./src/Logger.hs	19
-Error	./src/Types.hs	228
 Fatal	./src/Logger.hs	20
-Fatal	./src/Types.hs	229
 From	./src/Parsing/TelegramResponse.hs	69
 From	./src/Parsing/TelegramResponse.hs	69
 FromJSON Chat	./src/Parsing/TelegramResponse.hs	60
-FromJSON ConfigJSON	./src/Types.hs	367
 FromJSON From	./src/Parsing/TelegramResponse.hs	76
 FromJSON IM	./src/Parsing/SlackIMList.hs	24
-FromJSON IMServices	./src/Types.hs	361
-FromJSON JSONProxy	./src/Types.hs	342
-FromJSON JSONSlack	./src/Types.hs	355
-FromJSON JSONTelegram	./src/Types.hs	348
 FromJSON Message	./src/Parsing/SlackIMHistory.hs	30
 FromJSON Message	./src/Parsing/TelegramResponse.hs	44
-FromJSON Messenger	./src/Parsing/Config.hs	14
-FromJSON Proxy	./src/Parsing/Config.hs	24
 FromJSON Response	./src/Parsing/SlackIMHistory.hs	43
 FromJSON Response	./src/Parsing/SlackIMList.hs	32
 FromJSON Response	./src/Parsing/TelegramResponse.hs	21
 FromJSON Result	./src/Parsing/TelegramResponse.hs	31
 FromJSON Results	./src/Parsing/SlackIMHistory.hs	18
 FromJSON Results	./src/Parsing/SlackIMList.hs	16
-FromJSON TelegramChat	./src/Types.hs	267
-FromJSON TelegramUpdateMessage	./src/Types.hs	284
-FromJSON TelegramUpdateResponse	./src/Types.hs	309
-FromJSON TelegramUpdateResult	./src/Types.hs	298
-FromJSON TelegramUser	./src/Types.hs	248
+FromJSON Types-MConfig	./src/Parsing/Config.hs	14
+FromJSON Types-Proxy	./src/Parsing/Config.hs	20
 GET	./src/HTTP.hs	11
 GetHelpInfo	./src/Commander.hs	14
 GetRepeatCount	./src/Commander.hs	15
 HTTP	./src/HTTP.hs	3
 HTTP.Impl.Conduit	./src/HTTP/Impl/Conduit.hs	3
-HTTPRequest	./src/Types.hs	47
-HTTPRequest IMRequest	./src/Types.hs	121
-HTTPResponse	./src/Types.hs	49
-HTTPResponse ResponseBS	./src/Types.hs	122
 Handle	./src/Commander.hs	22
 Handle	./src/Commander.hs	23
 Handle	./src/HTTP.hs	13
@@ -98,38 +67,14 @@ Has	./src/App.hs	42
 Has Env App	./src/App.hs	46
 Has IM App	./src/App.hs	54
 Has Log App	./src/App.hs	50
-HasConfig	./src/Types.hs	38
-HasHTTP	./src/Types.hs	53
-HasIO	./src/Types.hs	42
-HasState	./src/Types.hs	81
-HttpGET	./src/Types.hs	219
-HttpMethod	./src/Types.hs	218
-HttpPOST	./src/Types.hs	220
 IM	./src/App.hs	39
 IM	./src/Parsing/SlackIMList.hs	21
 IM	./src/Parsing/SlackIMList.hs	22
-IMRequest	./src/Types.hs	391
-IMRequest	./src/Types.hs	392
-IMServices	./src/Types.hs	325
-IMServices	./src/Types.hs	325
 IMs	./src/Parsing/SlackIMList.hs	14
 Info	./src/Logger.hs	17
-Info	./src/Types.hs	226
 InputCommand	./src/Commander.hs	12
 InsertCount	./src/App.hs	27
 IntOrString	./src/Messenger_.hs	14
-IsConfig	./src/Types.hs	71
-IsConfig AppConfig	./src/Types.hs	104
-IsConfig SlackConfig	./src/Types.hs	106
-IsConfig TelegramConfig	./src/Types.hs	105
-IsLog	./src/Types.hs	69
-IsLog Log	./src/Types.hs	102
-JSONProxy	./src/Types.hs	338
-JSONProxy	./src/Types.hs	338
-JSONSlack	./src/Types.hs	334
-JSONSlack	./src/Types.hs	334
-JSONTelegram	./src/Types.hs	329
-JSONTelegram	./src/Types.hs	329
 Keyboard	./src/Messenger.hs	18
 Keyboard	./src/Parsing/TelegramBody.hs	18
 Keyboard	./src/Parsing/TelegramBody.hs	19
@@ -137,16 +82,15 @@ KeyboardMode	./src/Messenger.hs	19
 Keybutton	./src/Parsing/TelegramBody.hs	8
 Keybutton	./src/Parsing/TelegramBody.hs	8
 Log	./src/App.hs	38
-Log	./src/Types.hs	231
-Log	./src/Types.hs	232
 LogLevel	./src/Logger.hs	14
-LogLevel	./src/Types.hs	223
 LogMessage	./src/Logger.hs	25
 LogMessage	./src/Logger.hs	26
 Logger	./src/Logger.hs	3
 Logger.Impl.Console	./src/Logger/Impl/Console.hs	3
 Logging	./src/App.hs	58
 Logging App	./src/App.hs	66
+MConfig	./src/Types.hs	3
+MConfig	./src/Types.hs	3
 Main	./app/Main.hs	4
 Message	./src/Commander.hs	8
 Message	./src/Messenger_.hs	20
@@ -161,16 +105,11 @@ MessageChannel	./src/Logger/Impl/Console.hs	25
 MessageID	./src/Messenger_.hs	16
 Messages	./src/Parsing/SlackIMHistory.hs	15
 Messenger	./src/Messenger.hs	5
-Messenger	./src/Parsing/Config.hs	9
-Messenger	./src/Parsing/Config.hs	9
-Messenger	./src/Types.hs	385
 Messenger.Impl.Slack	./src/Messenger/Impl/Slack.hs	3
 Messenger.Impl.Telegram	./src/Messenger/Impl/Telegram.hs	3
 Messenger_	./src/Messenger_.hs	3
 Method	./src/HTTP.hs	9
-NestedRequests	./src/Types.hs	74
 Normal	./src/App.hs	27
-Ord RequestTimer	./src/Types.hs	406
 OutputCommand	./src/Commander.hs	18
 OutputText	./src/Logger.hs	23
 POST	./src/HTTP.hs	10
@@ -179,9 +118,8 @@ Parsing.SlackIMHistory	./src/Parsing/SlackIMHistory.hs	3
 Parsing.SlackIMList	./src/Parsing/SlackIMList.hs	3
 Parsing.TelegramBody	./src/Parsing/TelegramBody.hs	3
 Parsing.TelegramResponse	./src/Parsing/TelegramResponse.hs	3
-PollingDelay	./src/Types.hs	173
-Proxy	./src/Parsing/Config.hs	20
-Proxy	./src/Parsing/Config.hs	20
+Proxy	./src/Types.hs	8
+Proxy	./src/Types.hs	8
 RawResponse	./src/Messenger/Impl/Slack.hs	24
 Receiver	./src/Commander.hs	9
 Receiver	./src/Messenger_.hs	26
@@ -192,10 +130,6 @@ Reexport	./src/Reexport.hs	1
 RemoveKbd	./src/Messenger.hs	21
 RemoveKeyboard	./src/Parsing/TelegramBody.hs	20
 Request	./src/HTTP.hs	5
-RequestExhauster	./src/Types.hs	170
-RequestPurpose	./src/Types.hs	379
-RequestTimer	./src/Types.hs	400
-RequestTimer	./src/Types.hs	401
 Response	./src/HTTP.hs	7
 Response	./src/Parsing/SlackIMHistory.hs	39
 Response	./src/Parsing/SlackIMHistory.hs	40
@@ -203,7 +137,6 @@ Response	./src/Parsing/SlackIMList.hs	28
 Response	./src/Parsing/SlackIMList.hs	29
 Response	./src/Parsing/TelegramResponse.hs	17
 Response	./src/Parsing/TelegramResponse.hs	17
-ResponseBS	./src/Types.hs	191
 Result	./src/Parsing/TelegramResponse.hs	27
 Result	./src/Parsing/TelegramResponse.hs	27
 Results	./src/Parsing/SlackIMHistory.hs	14
@@ -214,29 +147,8 @@ SendMessage	./src/Parsing/TelegramBody.hs	29
 SendMessage	./src/Parsing/TelegramBody.hs	29
 SendResult	./src/Messenger_.hs	31
 SetRepeatCount	./src/Commander.hs	16
-Show HttpMethod	./src/Types.hs	157
-Slack	./src/Types.hs	387
-SlackApp	./src/Types.hs	209
-SlackChannels	./src/Types.hs	382
-SlackConfig	./src/Types.hs	186
-SlackConfig	./src/Types.hs	187
-SlackUpdates	./src/Types.hs	381
+SimpleException	./app/Main.hs	72
 StateMap	./src/App.hs	40
-Telegram	./src/Types.hs	386
-TelegramApp	./src/Types.hs	201
-TelegramChat	./src/Types.hs	259
-TelegramChat	./src/Types.hs	260
-TelegramConfig	./src/Types.hs	181
-TelegramConfig	./src/Types.hs	182
-TelegramUpdateMessage	./src/Types.hs	276
-TelegramUpdateMessage	./src/Types.hs	277
-TelegramUpdateResponse	./src/Types.hs	304
-TelegramUpdateResponse	./src/Types.hs	305
-TelegramUpdateResult	./src/Types.hs	293
-TelegramUpdateResult	./src/Types.hs	294
-TelegramUpdates	./src/Types.hs	380
-TelegramUser	./src/Types.hs	239
-TelegramUser	./src/Types.hs	240
 Timestamp	./src/Updater/Impl/SlackPolling.hs	29
 ToJSON Keyboard	./src/Parsing/TelegramBody.hs	22
 ToJSON Keybutton	./src/Parsing/TelegramBody.hs	12
@@ -245,8 +157,7 @@ Token	./src/Messenger/Impl/Slack.hs	21
 Token	./src/Messenger/Impl/Telegram.hs	23
 Token	./src/Updater/Impl/SlackPolling.hs	28
 Trace	./src/Logger.hs	15
-Trace	./src/Types.hs	224
-Types	./src/Types.hs	10
+Types	./src/Types.hs	1
 URL	./src/Messenger/Impl/Slack.hs	22
 Update	./src/Updater.hs	20
 Update	./src/Updater.hs	21
@@ -255,16 +166,11 @@ Updater.Impl.SlackPolling	./src/Updater/Impl/SlackPolling.hs	4
 Updater.Impl.TelegramPolling	./src/Updater/Impl/TelegramPolling.hs	3
 UserID	./src/Messenger_.hs	18
 Warning	./src/Logger.hs	18
-Warning	./src/Types.hs	227
-WithLogging	./src/Types.hs	66
 WithMessenger	./src/App.hs	74
 WithMessenger App	./src/App.hs	82
 WithState	./src/App.hs	104
 WithState App	./src/App.hs	114
-WorkWithRequest	./src/Types.hs	57
-apiURL	./src/Messenger/Impl/Telegram.hs	105
-appTelegramReq	./src/Types.hs	178
-appTelegramUpdRate	./src/Types.hs	179
+apiURL	./src/Messenger/Impl/Telegram.hs	108
 bPack	./src/Reexport.hs	98
 bReadFile	./src/Reexport.hs	100
 bUnpack	./src/Reexport.hs	99
@@ -281,19 +187,17 @@ chatUsername	./src/Parsing/TelegramResponse.hs	58
 close	./src/HTTP/Impl/Conduit.hs	15
 close	./src/Logger/Impl/Console.hs	43
 close	./src/Messenger/Impl/Slack.hs	77
-close	./src/Messenger/Impl/Telegram.hs	89
+close	./src/Messenger/Impl/Telegram.hs	91
 close	./src/Updater/Impl/SlackPolling.hs	45
-close	./src/Updater/Impl/TelegramPolling.hs	37
-compare	./src/Types.hs	407
+close	./src/Updater/Impl/TelegramPolling.hs	38
 convertConfig	./src/Messenger/Impl/Telegram.hs	34
-createKeyboard	./src/Messenger/Impl/Telegram.hs	146
-createKeybuttons	./src/Messenger/Impl/Telegram.hs	137
+createKeyboard	./src/Messenger/Impl/Telegram.hs	149
+createKeybuttons	./src/Messenger/Impl/Telegram.hs	140
 createPollingConfig	./src/Messenger/Impl/Slack.hs	30
-createRequestBody	./src/Messenger/Impl/Telegram.hs	153
+createRequestBody	./src/Messenger/Impl/Telegram.hs	156
 createUpdate	./src/Updater/Impl/SlackPolling.hs	147
-createUpdate	./src/Updater/Impl/TelegramPolling.hs	96
+createUpdate	./src/Updater/Impl/TelegramPolling.hs	97
 date	./src/Parsing/TelegramResponse.hs	39
-fork	./src/Types.hs	43
 from	./src/Parsing/TelegramResponse.hs	40
 fromFirstName	./src/Parsing/TelegramResponse.hs	70
 fromId	./src/Parsing/TelegramResponse.hs	71
@@ -312,56 +216,41 @@ getBy	./src/App.hs	56
 getChannel	./src/App.hs	76
 getChannel	./src/App.hs	86
 getChannels	./src/Updater/Impl/SlackPolling.hs	75
-getConfig	./src/Types.hs	39
 getDefaultBotState	./src/App.hs	199
-getMaybeProxy	./app/Main.hs	42
+getMaybeProxy	./app/Main.hs	45
 getMessages	./src/Updater/Impl/SlackPolling.hs	117
-getNextRequest	./src/Types.hs	78
-getNextRequest	./src/Types.hs	114
-getSendMessageResponse	./src/Messenger/Impl/Telegram.hs	68
-getState	./src/Types.hs	82
-getTelegramConfig	./app/Main.hs	52
-getTelegramResultsFromResponse	./src/Updater/Impl/TelegramPolling.hs	77
+getSendMessageResponse	./src/Messenger/Impl/Telegram.hs	70
+getTelegramConfig	./app/Main.hs	55
+getTelegramResultsFromResponse	./src/Updater/Impl/TelegramPolling.hs	78
 getText	./src/App.hs	80
 getText	./src/App.hs	101
-getToken	./app/Main.hs	37
+getToken	./app/Main.hs	40
 getURLbyTokenAndChannel	./src/Messenger/Impl/Slack.hs	86
-getUpdateResponse	./src/Updater/Impl/TelegramPolling.hs	68
+getUpdateResponse	./src/Updater/Impl/TelegramPolling.hs	69
 getUpdates	./src/App.hs	75
 getUpdates	./src/App.hs	83
 getUpdates	./src/Messenger.hs	25
 getUpdates	./src/Messenger_.hs	34
 getUpdates	./src/Updater.hs	28
 getUpdatesChannel	./src/Updater/Impl/SlackPolling.hs	160
-getUpdatesChannel	./src/Updater/Impl/TelegramPolling.hs	49
-handleResponse	./src/Types.hs	62
-handleResponse	./src/Types.hs	141
-host	./src/Parsing/Config.hs	21
+getUpdatesChannel	./src/Updater/Impl/TelegramPolling.hs	50
+host	./src/Types.hs	9
 idChannel	./src/Parsing/SlackIMList.hs	22
-imMessenger	./src/Types.hs	397
-imMethod	./src/Types.hs	395
-imProxy	./src/Types.hs	394
-imPurpose	./src/Types.hs	396
-imUrl	./src/Types.hs	393
-ims_slack	./src/Types.hs	327
-ims_telegram	./src/Types.hs	326
 insertToMap	./src/App.hs	106
 insertToMap	./src/App.hs	116
 isBot	./src/Parsing/TelegramResponse.hs	72
 isOk	./src/Parsing/TelegramResponse.hs	18
-jProxyIp	./src/Types.hs	339
-jProxyPort	./src/Types.hs	340
 keyText	./src/Parsing/TelegramBody.hs	9
 keyboard	./src/Messenger.hs	33
 keyboard	./src/Parsing/TelegramBody.hs	32
-logAndExit	./app/Main.hs	30
+logAndExit	./app/Main.hs	33
 logDebug	./src/App.hs	60
 logDebug	./src/App.hs	68
 logDebug	./src/Logger.hs	32
 logError	./src/App.hs	63
 logError	./src/App.hs	71
 logError	./src/Logger.hs	35
-logFatal	./app/Main.hs	23
+logFatal	./app/Main.hs	26
 logFatal	./src/App.hs	64
 logFatal	./src/App.hs	72
 logFatal	./src/Logger.hs	36
@@ -369,8 +258,6 @@ logInfo	./src/App.hs	61
 logInfo	./src/App.hs	69
 logInfo	./src/Logger.hs	33
 logLevel	./src/Logger.hs	28
-logLevel	./src/Types.hs	232
-logMsg	./src/Types.hs	233
 logPrefix	./src/Logger.hs	43
 logText	./src/Logger.hs	27
 logToChannel	./src/Logger/Impl/Console.hs	66
@@ -385,7 +272,7 @@ mMessage	./src/Messenger_.hs	22
 mReceiver	./src/Messenger_.hs	21
 mText	./src/Messenger_.hs	23
 main	./Setup.hs	2
-main	./app/Main.hs	67
+main	./app/Main.hs	74
 main	./test/Spec.hs	1
 makeCommand	./src/Commander.hs	23
 message	./src/Parsing/TelegramResponse.hs	28
@@ -393,22 +280,21 @@ message	./src/Updater.hs	23
 messageId	./src/Parsing/TelegramResponse.hs	41
 messages	./src/Parsing/SlackIMHistory.hs	41
 messenger	./src/App.hs	24
+messengers	./src/Parsing/Config.hs	12
 msgType	./src/Parsing/SlackIMHistory.hs	28
-name	./src/Parsing/Config.hs	10
+name	./src/Types.hs	4
 new	./src/HTTP/Impl/Conduit.hs	10
 new	./src/Logger/Impl/Console.hs	27
 new	./src/Messenger/Impl/Slack.hs	38
 new	./src/Messenger/Impl/Telegram.hs	43
 new	./src/Updater/Impl/SlackPolling.hs	33
-new	./src/Updater/Impl/TelegramPolling.hs	25
+new	./src/Updater/Impl/TelegramPolling.hs	26
 newMap	./src/App.hs	105
 newMap	./src/App.hs	115
 ok	./src/Parsing/SlackIMHistory.hs	40
 ok	./src/Parsing/SlackIMList.hs	29
-outputLog	./src/Types.hs	67
-outputLog	./src/Types.hs	130
 parseJSON	./src/Parsing/Config.hs	15
-parseJSON	./src/Parsing/Config.hs	25
+parseJSON	./src/Parsing/Config.hs	21
 parseJSON	./src/Parsing/SlackIMHistory.hs	19
 parseJSON	./src/Parsing/SlackIMHistory.hs	31
 parseJSON	./src/Parsing/SlackIMHistory.hs	44
@@ -420,84 +306,37 @@ parseJSON	./src/Parsing/TelegramResponse.hs	32
 parseJSON	./src/Parsing/TelegramResponse.hs	45
 parseJSON	./src/Parsing/TelegramResponse.hs	61
 parseJSON	./src/Parsing/TelegramResponse.hs	77
-parseJSON	./src/Types.hs	249
-parseJSON	./src/Types.hs	268
-parseJSON	./src/Types.hs	285
-parseJSON	./src/Types.hs	299
-parseJSON	./src/Types.hs	310
-parseJSON	./src/Types.hs	343
-parseJSON	./src/Types.hs	349
-parseJSON	./src/Types.hs	356
-parseJSON	./src/Types.hs	362
-parseJSON	./src/Types.hs	368
-port	./src/Parsing/Config.hs	22
-proxy	./src/Parsing/Config.hs	12
+port	./src/Types.hs	10
+proxy	./src/Types.hs	6
 proxyServer	./src/Messenger/Impl/Slack.hs	19
 proxyServer	./src/Messenger/Impl/Telegram.hs	29
 proxyServer	./src/Updater/Impl/SlackPolling.hs	25
-proxyServer	./src/Updater/Impl/TelegramPolling.hs	23
+proxyServer	./src/Updater/Impl/TelegramPolling.hs	24
 readFromMap	./src/App.hs	110
 readFromMap	./src/App.hs	120
 receiver	./src/Updater.hs	22
 removeKeyboard	./src/App.hs	79
 removeKeyboard	./src/App.hs	97
 repeatCount	./src/App.hs	29
-requestData	./src/Types.hs	403
-requestTime	./src/Types.hs	402
 result	./src/Parsing/TelegramResponse.hs	19
 results	./src/Parsing/SlackIMList.hs	30
 runApp	./src/App.hs	144
-runAppWithEnv	./app/Main.hs	60
+runAppWithEnv	./app/Main.hs	63
 runBot	./src/App.hs	146
-s_rate	./src/Types.hs	336
-s_token	./src/Types.hs	335
-scDelay	./src/Types.hs	188
-scToken	./src/Types.hs	189
 send	./src/Messenger.hs	29
 sendKeyboard	./src/App.hs	78
 sendKeyboard	./src/App.hs	93
-sendKeyboardURL	./src/Messenger/Impl/Telegram.hs	125
+sendKeyboardURL	./src/Messenger/Impl/Telegram.hs	128
 sendMessage	./src/App.hs	77
 sendMessage	./src/App.hs	89
 sendMessage	./src/Messenger/Impl/Slack.hs	53
 sendMessage	./src/Messenger_.hs	36
-sendMessageURLFromToken	./src/Messenger/Impl/Telegram.hs	115
+sendMessageURLFromToken	./src/Messenger/Impl/Telegram.hs	118
 sendRequest	./src/HTTP.hs	15
-sendRequest	./src/Types.hs	61
-sendRequest	./src/Types.hs	134
-services	./src/Types.hs	323
-setState	./src/Types.hs	83
-show	./src/Types.hs	158
 showTimeStamp	./src/Updater/Impl/SlackPolling.hs	101
-sleep	./src/Types.hs	44
 subtype	./src/Parsing/SlackIMHistory.hs	24
 tPack	./src/Reexport.hs	95
 tUnpack	./src/Reexport.hs	96
-t_proxy	./src/Types.hs	332
-t_rate	./src/Types.hs	331
-t_token	./src/Types.hs	330
-tcDelay	./src/Types.hs	183
-tcToken	./src/Types.hs	184
-telegramChatFirstName	./src/Types.hs	262
-telegramChatId	./src/Types.hs	261
-telegramChatLastName	./src/Types.hs	263
-telegramChatType	./src/Types.hs	265
-telegramChatUsername	./src/Types.hs	264
-telegramUpdateMsgChat	./src/Types.hs	280
-telegramUpdateMsgDate	./src/Types.hs	281
-telegramUpdateMsgFrom	./src/Types.hs	279
-telegramUpdateMsgId	./src/Types.hs	278
-telegramUpdateMsgText	./src/Types.hs	282
-telegramUpdateOk	./src/Types.hs	306
-telegramUpdateResult	./src/Types.hs	307
-telegramUpdateResultId	./src/Types.hs	295
-telegramUpdateResultMsg	./src/Types.hs	296
-telegramUserFirstName	./src/Types.hs	243
-telegramUserId	./src/Types.hs	241
-telegramUserIsBot	./src/Types.hs	242
-telegramUserLanguageCode	./src/Types.hs	246
-telegramUserLastName	./src/Types.hs	244
-telegramUserUsername	./src/Types.hs	245
 text	./src/Parsing/SlackIMHistory.hs	25
 text	./src/Parsing/TelegramBody.hs	30
 text	./src/Parsing/TelegramResponse.hs	42
@@ -512,28 +351,25 @@ toLog	./src/App.hs	124
 toLog	./src/Logger/Impl/Console.hs	55
 token	./src/Messenger/Impl/Slack.hs	18
 token	./src/Messenger/Impl/Telegram.hs	28
-token	./src/Parsing/Config.hs	11
+token	./src/Types.hs	5
 token	./src/Updater/Impl/SlackPolling.hs	24
-token	./src/Updater/Impl/TelegramPolling.hs	22
-tryDecodeResponse	./src/Updater/Impl/TelegramPolling.hs	89
+token	./src/Updater/Impl/TelegramPolling.hs	23
+tryDecodeResponse	./src/Updater/Impl/TelegramPolling.hs	90
 tryDecodeResponseIMHistory	./src/Updater/Impl/SlackPolling.hs	107
 tryDecodeResponseIMList	./src/Updater/Impl/SlackPolling.hs	67
 ts	./src/Parsing/SlackIMHistory.hs	27
 unApp	./src/App.hs	33
-unApp	./src/Types.hs	194
-unSlkApp	./src/Types.hs	210
-unTgApp	./src/Types.hs	202
 updateId	./src/Parsing/TelegramResponse.hs	29
 updatesChannel	./src/Messenger.hs	27
 updatesChannel	./src/Updater.hs	29
-updatesURLFromToken	./src/Messenger/Impl/Telegram.hs	107
-updatesURLFromToken	./src/Updater/Impl/TelegramPolling.hs	118
+updatesURLFromToken	./src/Messenger/Impl/Telegram.hs	110
+updatesURLFromToken	./src/Updater/Impl/TelegramPolling.hs	119
 user	./src/Messenger_.hs	28
 user	./src/Parsing/SlackIMHistory.hs	26
 user	./src/Updater.hs	17
 withHandle	./src/HTTP/Impl/Conduit.hs	23
 withHandle	./src/Logger/Impl/Console.hs	49
 withHandle	./src/Messenger/Impl/Slack.hs	83
-withHandle	./src/Messenger/Impl/Telegram.hs	96
+withHandle	./src/Messenger/Impl/Telegram.hs	99
 withHandle	./src/Updater/Impl/SlackPolling.hs	51
-withHandle	./src/Updater/Impl/TelegramPolling.hs	43
+withHandle	./src/Updater/Impl/TelegramPolling.hs	44

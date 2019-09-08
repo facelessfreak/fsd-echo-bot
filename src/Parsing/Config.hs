@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-
 module Parsing.Config where
 
 import Reexport
@@ -9,17 +8,26 @@ import qualified Types
 
 data Configuration = 
   Configuration
-    { messengers :: [Types.Messenger] }
+    { messengers :: [Types.MessengerSettings] }
 
-instance FromJSON Types.Messenger where
+instance FromJSON Types.MessengerSettings where
     parseJSON (Object m) =
-        Messenger <$> m .:  "name"
-                  <*> m .:  "token"
-                  <*> m .:? "proxy"
+        Types.MessengerSettings
+        <$> m .:  "name"
+        <*> m .:  "token"
+        <*> m .:? "proxy"
 
 instance FromJSON Types.Proxy where
     parseJSON (Object p) =
-        Proxy <$> p .: "host"
-              <*> p .: "port"
+        Types.Proxy
+        <$> p .: "host"
+        <*> p .: "port"
+
+instance FromJSON Types.Messenger where
+  parseJSON (String m) = pure $
+    case m of
+      "telegram" -> Types.Telegram
+      "slack"    -> Types.Slack
+      otherwise  -> Types.UnknownMessenger
 
 

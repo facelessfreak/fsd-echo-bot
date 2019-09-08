@@ -1,11 +1,16 @@
 module Types where
 
-data Messenger = Messenger
-  { name  :: String 
-  , token :: String
-  , proxy :: Maybe Proxy }
+data MessengerSettings = MessengerSettings
+  { messenger :: Messenger 
+  , token     :: String
+  , proxy     :: Maybe Proxy }
 
 data Proxy = Proxy
   { host :: String 
   , port :: Int }
+
+data Messenger
+  = Telegram
+  | Slack
+  | UnknownMessenger
 

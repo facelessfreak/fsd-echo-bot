@@ -2,10 +2,12 @@ module Reexport ( ByteString
                 , bPack
                 , bUnpack
                 , bReadFile
+                , bsTotext
 
                 , Text 
                 , tPack
                 , tUnpack 
+                , textTobs
                 
                 , runReaderT 
                 , ReaderT 
@@ -98,3 +100,6 @@ tUnpack = T.unpack
 bPack   = B.pack
 bUnpack = B.unpack
 bReadFile = B.readFile
+
+bsTotext = tPack . bUnpack
+textTobs = bPack . tUnpack

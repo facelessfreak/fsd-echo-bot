@@ -18,6 +18,7 @@ import           System.Environment
 import           App                          ( runApp 
                                               , Env (..) )
 import           Data.Monoid                  ( (<>) )
+import           Data.Coerce
 
 logFatal
   :: Logger.Handle
@@ -60,14 +61,14 @@ runAppWithEnv
   :: Config.Messenger
   -> Logger.Handle
   -> IO ()
-runAppWithEnv m l = do
-  case Config.name m of
-    "telegram" -> 
-      -- TODO: create and pass updater handle
-      TelegramPolling.withHandle 
-      Telegram.withHandle (getTelegramConfig m) $ \h -> 
-      runApp $ Env { messenger = h
-                   , logger    = l }    
+runAppWithEnv messengerSettings logger = do
+  let currentMessenger = Types.messenger messengerSettings
+  case currentMessenger of
+    Types.Telegram -> 
+      TelegramPolling.withHandle (coerce currentMessenger) \ updater -> 
+        Telegram.withHandle (getTelegramConfig m) $ \h -> 
+        runApp $ Env { messenger = h
+                     , logger    = l }    
 
 type SimpleException a = IO (Either SomeException a)
 

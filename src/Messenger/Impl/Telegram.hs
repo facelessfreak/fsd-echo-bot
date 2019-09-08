@@ -19,14 +19,14 @@ import qualified Updater.Impl.TelegramPolling as Polling
 import qualified Logger
 import qualified Logger.Impl.Console as Console
 import qualified Parsing.TelegramBody as TelegramBody
+import qualified Types
 
 type Token  = String
 type ChatID = String
 
-data Config
+newtype Config
   = Config 
-    { token       :: String 
-    , proxyServer :: Maybe Proxy }
+    { settings ::  Types.MessengerSettings }
 
 convertConfig
   :: Config
@@ -44,8 +44,8 @@ new config' updater' logger' = do
   pure Handle
     { getUpdates     = Updater.getUpdates updater'
     , updatesChannel = Updater.updatesChannel updater'
-    , send = \ m r -> do 
-        responseBS <- getSendMessageResponse config m Nothing r
+    , send = \ message receiver -> do 
+        responseBS <- getSendMessageResponse config' message Nothing receiver
         Logger.logTrace logger' $
           ( tPack
           . bUnpack
